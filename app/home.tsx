@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
 import { SafeAreaView, ScrollView, View } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
@@ -10,9 +11,9 @@ import {
   Welcome,
 } from "../components";
 
-const Home = () => {
-  const router = useRouter()
-  const [searchTerm, setSearchTerm] = useState("");
+const Home: React.FC = () => {
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -21,16 +22,25 @@ const Home = () => {
           headerStyle: { backgroundColor: COLORS.lightWhite },
           headerShadowVisible: false,
           headerLeft: () => (
-            <ScreenHeaderBtn iconUrl={icons.menu} dimension='60%' />
+            <ScreenHeaderBtn
+              iconUrl={icons.menu}
+              dimension="60%"
+              handlePress={null}
+            />
           ),
           headerRight: () => (
-            <ScreenHeaderBtn iconUrl={images.profile} dimension='100%' />
+            <ScreenHeaderBtn
+              iconUrl={images.profile}
+              dimension="100%"
+              handlePress={null}
+            />
           ),
           headerTitle: "",
         }}
       />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      {/* <ScrollView showsVerticalScrollIndicator={false}> */}
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View
           style={{
             flex: 1,
@@ -42,7 +52,7 @@ const Home = () => {
             setSearchTerm={setSearchTerm}
             handleClick={() => {
               if (searchTerm) {
-                router.push(`/search/${searchTerm}`)
+                router.push(`/search/${searchTerm}`);
               }
             }}
           />
