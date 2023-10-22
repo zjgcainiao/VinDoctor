@@ -1,68 +1,57 @@
-import React, { useState } from "react";
-
-import { SafeAreaView, ScrollView, View } from "react-native";
-import { Stack, useRouter } from "expo-router";
-
-import { COLORS, icons, images, SIZES } from "../constants";
+import React from "react";
 import {
-  Nearbyjobs,
-  Popularjobs,
-  ScreenHeaderBtn,
-  Welcome,
-} from "../components";
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  Image,
+} from "react-native";
 
-const Home: React.FC = () => {
-  const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState<string>("");
+import main_styles from "../styles/MainTheme.styles";
 
+function LogoTitle() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
-      <Stack.Screen
-        options={{
-          headerStyle: { backgroundColor: COLORS.lightWhite },
-          headerShadowVisible: false,
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.menu}
-              dimension="60%"
-              handlePress={null}
-            />
-          ),
-          headerRight: () => (
-            <ScreenHeaderBtn
-              iconUrl={images.profile}
-              dimension="100%"
-              handlePress={null}
-            />
-          ),
-          headerTitle: "",
+    <Image
+      style={{ width: 50, height: 50 }}
+      source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
+    />
+  );
+}
+
+const Home = () => (
+  <SafeAreaView style={main_styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <Text style={styles.heading}>Welcome to Vin Doctor</Text>
+      <Text style={styles.description}>
+        Discover how our platform works and how it can help you.
+      </Text>
+
+      <Button
+        title="Sign Up"
+        onPress={() => {
+          /* Sign Up Logic */
         }}
       />
+    </ScrollView>
+  </SafeAreaView>
+);
 
-      {/* <ScrollView showsVerticalScrollIndicator={false}> */}
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View
-          style={{
-            flex: 1,
-            padding: SIZES.medium,
-          }}
-        >
-          <Welcome
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            handleClick={() => {
-              if (searchTerm) {
-                router.push(`/search/${searchTerm}`);
-              }
-            }}
-          />
-
-          <Popularjobs />
-          <Nearbyjobs />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    width: "100%",
+  },
+  heading: {
+    fontSize: 28,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+});
 
 export default Home;

@@ -1,3 +1,5 @@
+// Adding expo-router/babel plugin in the plugins array 
+
 module.exports = function (api) {
   api.cache(true);
   return {

@@ -8,6 +8,8 @@
       "expo-router"
     ],
     "name": "VinDoctor",
-    "slug": "VinDoctor"
+    "slug": "Vin-Doctor",
+    "owner":"Yin 'Stephen' Wang (holleratme420@gmail.com)",
+    "desription":"your online vehicle doctor and repair shop, providng detailed, updated technical and safety information, vehicle history info; help you make machine learning based estimates and search parts inforamtion. "
   }
 }

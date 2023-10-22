@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, Button, Text, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  TextInput,
+  Button,
+  Text,
+  StyleSheet,
+} from "react-native";
+
+import { Stack, useRouter } from "expo-router";
 
 const SearchPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -25,7 +35,8 @@ const SearchPage: React.FC = () => {
   }, [searchTerm]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <Stack.Screen></Stack.Screen>
       <TextInput
         style={styles.searchInput}
         value={searchTerm}
@@ -35,7 +46,7 @@ const SearchPage: React.FC = () => {
       <Button title="Search" onPress={handleSearch} />
       {isLoading && <Text>Searching vin... please wait...</Text>}
       {searchResult && <Text style={styles.resultText}>{searchResult}</Text>}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -50,6 +61,7 @@ const fetchSearchResult = async (term: string): Promise<string> => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    width: "100%",
   },
   searchInput: {
     borderWidth: 1,
