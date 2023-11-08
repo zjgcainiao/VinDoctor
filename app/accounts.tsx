@@ -11,16 +11,7 @@ import {
 
 import main_styles from "../styles/MainTheme.styles";
 
-function LogoTitle() {
-  return (
-    <Image
-      style={{ width: 50, height: 50 }}
-      source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
-    />
-  );
-}
-
-const Home = () => (
+const Accounts = () => (
   <SafeAreaView style={main_styles.container}>
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.heading}>Welcome to Vin Doctor</Text>
@@ -54,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Accounts;

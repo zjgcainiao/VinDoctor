@@ -4,12 +4,7 @@ import { SafeAreaView, ScrollView, View } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
 import { COLORS, icons, images, SIZES } from "../constants";
-import {
-  Nearbyjobs,
-  Popularjobs,
-  ScreenHeaderBtn,
-  Welcome,
-} from "../components";
+import { Nearbyjobs, Popularjobs, ScreenHeaderBtn, Welcome } from ".";
 
 const Home: React.FC = () => {
   const router = useRouter();

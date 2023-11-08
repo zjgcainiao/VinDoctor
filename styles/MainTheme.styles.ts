@@ -1,14 +1,26 @@
 // app/styles/VinSearch.styles.ts
 
 import { StyleSheet } from 'react-native';
-
- const main_styles = StyleSheet.create({
+const main_styles = StyleSheet.create({
+    logoTitle: {
+        width: 50,
+        height: 50,
+    },
     container: {
         flex: 1,
-        backgroundColor: '#009898',
+        padding: 20,
+        backgroundColor: '#e7e5e4', // #e7e5e4 is the warmGray200 settingin gluestack-ui-->default tokens
         paddingHorizontal: 20,
-        // width:"100%",
-         
+        paddingVertical: 16,
+        borderRadius: 15,
+        alignSelf: "center",
+        width: 375,
+        maxWidth: "100%",
+
+    },
+    timings: {
+        color: "#fff",
+        fontSize: 14,
     },
     header: {
         paddingTop: 20,
@@ -53,7 +65,7 @@ import { StyleSheet } from 'react-native';
     },
     vinText: {
         fontSize: 16,
-     },
+    },
     navbar: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -64,8 +76,22 @@ import { StyleSheet } from 'react-native';
     title: {
         color: 'white',
         fontSize: 24,
-     },
-    
+    },
+    box: {
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    searchInput: {
+        borderWidth: 1,
+        borderColor: "#ccc",
+        padding: 10,
+        marginBottom: 10,
+    },
+    resultText: {
+        marginTop: 20,
+        fontSize: 18,
+    },
+
 });
 
 export default main_styles;
