@@ -13,4 +13,11 @@ web-build/
 # macOS
 .DS_Store
 
+
+# build folder
+ios/
+
 .gitignore
+.env*.local
+.env.local
+.env

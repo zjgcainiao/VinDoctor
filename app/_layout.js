@@ -1,10 +1,7 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
-
-
-import React from "react";
 import { StatusBar } from 'expo-status-bar';
-
+import { Stack } from 'expo-router';
 const Layout = () => {
   return (
     <Drawer>
@@ -27,5 +24,9 @@ const Layout = () => {
   );
 
 };
+
+// const Layout = () => {
+//   return (<Stack />);
+// };
 
 export default Layout;

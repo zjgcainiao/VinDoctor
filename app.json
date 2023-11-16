@@ -8,8 +8,19 @@
       "expo-router"
     ],
     "name": "VinDoctor",
-    "slug": "Vin-Doctor",
-    "owner":"Yin 'Stephen' Wang (holleratme420@gmail.com)",
-    "desription":"your online vehicle doctor and repair shop, providng detailed, updated technical and safety information, vehicle history info; help you make machine learning based estimates and search parts inforamtion. "
+    "slug": "vin-doctor",
+    "owner": "holleratme420",
+    "desription": "your online, AI-powered, doctor for your vehicles, providng detailed, updated technical and safety information, vehicle history info; help you make machine learning based estimates and search parts inforamtion. ",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "fb3f83d1-9751-47de-9ae0-c5989486e408"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.automan-ai-shop.vin-doctor"
+    }
   }
 }

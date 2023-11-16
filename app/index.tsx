@@ -24,6 +24,7 @@ import main_styles from "../styles/MainTheme.styles";
 import { LinearGradient } from "expo-linear-gradient";
 // import LinearGradient from "react-native-linear-gradient";
 import { ScrollView } from "react-native-gesture-handler";
+import OpenAIChatComponent from "../components/ chatbotUI";
 
 function LogoTitle() {
   return (
@@ -53,7 +54,14 @@ export default function Index() {
               <Text color="green">second line</Text>
             </Center>
           </Box>
-
+          <Box
+            bg="$secondary500"
+            p="$2"
+            m="$2"
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <OpenAIChatComponent />
+          </Box>
           <Box>
             <Heading>This is the H-Stack</Heading>
             <HStack space="md" reversed={false}>

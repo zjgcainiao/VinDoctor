@@ -25,7 +25,7 @@ import {
   VStack,
   Image,
 } from "@gluestack-ui/themed"; //gluestack-ui themed
-
+import { config } from "@gluestack-ui/config";
 import { Link, LinkText } from "@gluestack-ui/themed"; //gluestack-ui themed
 interface CustomLinearGradientProps extends LinearGradient {
   borderRadius: string;
@@ -60,36 +60,33 @@ const VehicleReport: React.FC = () => {
       {/* <Stack.Screen>
 
       </Stack.Screen> */}
-      <ScrollView>
-        <VStack space="md" reversed={false}>
-          <TextInput
-            style={main_styles.searchInput}
-            value={searchTerm}
-            onChangeText={setSearchTerm}
-            placeholder="Enter VIN"
-          />
-          <Button title="Search" onPress={handleSearch} />
-          {isLoading && <Text>Searching vin... please wait...</Text>}
-          {searchResult && (
-            <Text style={main_styles.resultText}>{searchResult}</Text>
-          )}
+      <GluestackUIProvider config={config}>
+        <ScrollView>
+          <VStack space="md" reversed={false}>
+            <TextInput
+              style={main_styles.searchInput}
+              value={searchTerm}
+              onChangeText={setSearchTerm}
+              placeholder="Enter VIN"
+            />
+            <Button title="Search" onPress={handleSearch} />
+            {isLoading && <Text>Searching vin... please wait...</Text>}
+            {searchResult && (
+              <Text style={main_styles.resultText}>{searchResult}</Text>
+            )}
 
-          <LinearGradient
-            colors={["$purple400", "$blue400", "$pink300"]}
-            style={{ borderRadius: 16 }}
-          >
-            {/* ... */}
-            <Link href="https://ui.gluestack.io/docs/" isExternal>
-              <LinkText color="$primary500" fontSize="$xl">
-                Learn gluestack-ui
-              </LinkText>
-            </Link>
-          </LinearGradient>
-          <LinkText color="$primary500" fontSize="$xl">
-            Learn gluestack-ui
-          </LinkText>
-        </VStack>
-      </ScrollView>
+            <LinearGradient
+              colors={["$purple400", "$blue400", "$pink300"]}
+              style={{ borderRadius: 16 }}
+            >
+              {/* ... */}
+              <Link href="https://ui.gluestack.io/docs/" isExternal>
+                <LinkText fontSize="$xl">Learn gluestack-ui</LinkText>
+              </Link>
+            </LinearGradient>
+          </VStack>
+        </ScrollView>
+      </GluestackUIProvider>
     </SafeAreaView>
   );
 };
