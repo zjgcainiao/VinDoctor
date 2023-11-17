@@ -1,146 +1,131 @@
-import { Link, Redirect } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
-  GluestackUIProvider,
+  View,
+  Image,
   Button,
-  ButtonText,
-  Box,
+  StyleSheet,
+  TouchableOpacity,
   Text,
-  HStack,
-  Heading,
-  Center,
-  VStack,
-} from "@gluestack-ui/themed"; //gluestack-ui themed
-
-import { config } from "@gluestack-ui/config"; //
-import { SpeedDial } from "@rneui/themed"; // React Native Elements
-import { Switch } from "@rneui/themed"; // React Native Elements
-
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native";
-import * as SplashScreen from "expo-splash-screen";
-import { Image, Card } from "@rneui/themed";
-import main_styles from "../styles/MainTheme.styles";
-import { LinearGradient } from "expo-linear-gradient";
-// import LinearGradient from "react-native-linear-gradient";
+import main_styles from "../styles/mainTheme.styles";
 import { ScrollView } from "react-native-gesture-handler";
-import OpenAIChatComponent from "../components/ chatbotUI";
-
+import { onAuthStateChanged } from "firebase/auth";
+import { firebase_auth } from "../components/firebaseConfig";
+import { Stack } from "expo-router/stack";
 function LogoTitle() {
   return (
     <Image
-      style={main_styles.logoTitle}
-      source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
+      style={{ width: 150, height: 90 }}
+      source={{ uri: "../assets/icon.png" }}
     />
   );
 }
 
-export default function Index() {
-  const [open, setOpen] = React.useState(false);
+import * as Linking from "expo-linking";
+// const AppStack = () => {
+//   return (
+//     <Stack>
+//       <Stack.Screen name="Index" component={IndexPage} />
+//       <Stack.Screen name="SignIn" component={SignInScreen} />
+//       <Stack.Screen name="Register" component={RegisterScreen} />
+//       <Stack.Screen name="TryOut" component={TryOutScreen} />
+//     </Stack>
+//   );
+// };
+
+const IndexPage: React.FC = (navigation) => {
+  const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // return <Redirect href="/home" />;
   // config={config}
-  SplashScreen.preventAutoHideAsync();
-  setTimeout(SplashScreen.hideAsync, 2000);
+  useEffect(() => {
+    const auth = firebase_auth;
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        setIsLoggedIn(true);
+        // Optionally redirect to the home page
+        // navigation.navigate('Home');
+      } else {
+        // User is signed out
+        setIsLoggedIn(false);
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  const auth = firebase_auth;
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in
+      setIsLoggedIn(true);
+      // Optionally redirect to the home page
+      // navigation.navigate('Home');
+    } else {
+      // User is signed out
+      setIsLoggedIn(false);
+    }
+  });
 
   return (
-    //gluestack-UI style
     <SafeAreaView style={main_styles.container}>
-      <GluestackUIProvider config={config}>
-        {/* <LogoTitle /> */}
-        <ScrollView>
-          <Box bg="$secondary300" p="$2" m="$2">
-            <Center>
-              <Text color="white">First line</Text>
-              <Text color="green">second line</Text>
-            </Center>
-          </Box>
-          <Box
-            bg="$secondary500"
-            p="$2"
-            m="$2"
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <OpenAIChatComponent />
-          </Box>
-          <Box>
-            <Heading>This is the H-Stack</Heading>
-            <HStack space="md" reversed={false}>
-              <Box w="$24" h="$24" bg="$blue200">
-                <Text color="textDark">24x24</Text>
-              </Box>
-              <Box
-                w="$48"
-                h="$48"
-                bg="$blue400"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Text size="4xl" color="$white">
-                  48x48
-                </Text>
-              </Box>
-
-              <Box w="$72" h="$72" bg="$blue600">
-                <Text size="4xl" color="$white">
-                  72x72
-                </Text>
-              </Box>
-            </HStack>
-          </Box>
-          <Box>
-            <Heading>This is the V-Stack</Heading>
-            <Center>
-              <VStack space="md" reversed={false}>
-                <Box
-                  w="$72"
-                  h="$72"
-                  bg="$purple200"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Text
-                    size="4xl"
-                    color="$warmGray800"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    72x72
-                  </Text>
-                </Box>
-                <Box w="$80" h="$80" bg="$violet400">
-                  <Text size="4xl" color="$warmGray200">
-                    80x80
-                  </Text>
-                </Box>
-                <Box w="$96" h="$96" bg="$violet800">
-                  <Text size="4xl" color="$warmGray200">
-                    96x96
-                  </Text>
-                </Box>
-              </VStack>
-            </Center>
-          </Box>
-        </ScrollView>
-        <SpeedDial
-          isOpen={open}
-          icon={{ name: "edit", color: "#fff" }}
-          openIcon={{ name: "close", color: "#fff" }}
-          onOpen={() => setOpen(!open)}
-          onClose={() => setOpen(!open)}
-        >
-          <SpeedDial.Action
-            icon={{ name: "add", color: "#fff" }}
-            title="Add"
-            onPress={() => console.log("Add Something")}
-          />
-          <SpeedDial.Action
-            icon={{ name: "delete", color: "#fff" }}
-            title="Delete"
-            onPress={() => console.log("Delete Something")}
-          />
-        </SpeedDial>
-        <StatusBar />
-      </GluestackUIProvider>
+      <LogoTitle />
+      <ScrollView style={styles.buttonContainer}>
+        {!isLoggedIn && (
+          <>
+            <Button
+              title="Register"
+              onPress={() => {
+                Linking.openURL("/RegisterScreen");
+              }}
+            />
+            <Button
+              title="Login"
+              onPress={() => {
+                /* handle login */
+                Linking.openURL("/SignInScreen");
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                /* handle try out */
+              }}
+            >
+              <Text style={styles.mutedButton}>try out first</Text>
+            </TouchableOpacity>
+          </>
+        )}
+        {isLoggedIn && (
+          <Text>Welcome back!</Text> // Or other content for logged-in users
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
-}
+};
+// Styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: {
+    width: 200, // Adjust as needed
+    height: 150, // Adjust as needed
+    resizeMode: "contain",
+  },
+  buttonContainer: {
+    marginTop: 20,
+    width: "80%",
+  },
+  mutedButton: {
+    color: "#6c757d", // Muted text color
+    textAlign: "center",
+    marginTop: 15,
+  },
+});
+
+export default IndexPage;

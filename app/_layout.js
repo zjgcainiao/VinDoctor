@@ -2,25 +2,47 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
 import { StatusBar } from 'expo-status-bar';
 import { Stack } from 'expo-router';
+import { SafeAreaView } from "react-native";
+
+
+// Import your screen components
+
+import Index from './index';
+import AccountScreen from './AccountScreen';
+import RegisterScreen from './RegisterScreen';
+import SignInScreen from './SignInScreen';
+
 const Layout = () => {
   return (
-    <Drawer>
-      <Drawer.Screen
-        name="index" // This is the name of the page and must match the url from root
-        options={{
-          drawerLabel: "Service",
-          title: "Online Vin Doctor",
-        }}
-      />
-      {/* <Drawer.Screen
-        name="user/[id]" // This is the name of the page and must match the url from root
-        options={{
-          drawerLabel: "User",
-          title: "overview",
-        }}
-      /> */}
 
-    </Drawer>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#e7e5e4',
+          },
+          headerTintColor: '#c2410c', // orange700
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          flex: 1,
+          headerTitleAlign: 'center',
+
+      }}
+      >
+        {/* <Stack.Screen name="index" />
+        <Stack.Screen name="accountScreen" />
+        <Stack.Screen name="RegisterScreen" />
+        <Stack.Screen name="SignInScreen" />
+        <Stack.Screen name="VehicleReport" /> */}
+        <Stack.Screen name="index"  />
+        <Stack.Screen name="AccountScreen" />
+        <Stack.Screen name="RegisterScreen" />
+        <Stack.Screen name="SignIn"  />
+
+      </Stack>
+      <StatusBar style="auto" />
+    </SafeAreaView>
   );
 
 };

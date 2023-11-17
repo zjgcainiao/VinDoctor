@@ -11,19 +11,21 @@ import {
 } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import { Stack, useRouter } from "expo-router";
-import main_styles from "../styles/MainTheme.styles";
+import main_styles from "../styles/mainTheme.styles";
 import myLinearGradient from "../components/LinearGradientParts";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   GluestackUIProvider,
   ButtonText,
   Box,
+
   // Button,
   HStack,
   Heading,
   Center,
   VStack,
   Image,
+  StyledProvider,
 } from "@gluestack-ui/themed"; //gluestack-ui themed
 import { config } from "@gluestack-ui/config";
 import { Link, LinkText } from "@gluestack-ui/themed"; //gluestack-ui themed
@@ -57,36 +59,31 @@ const VehicleReport: React.FC = () => {
 
   return (
     <SafeAreaView style={main_styles.container}>
-      {/* <Stack.Screen>
+      <ScrollView>
+        <VStack space="md" reversed={false}>
+          <TextInput
+            style={main_styles.searchInput}
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+            placeholder="Enter VIN"
+          />
+          <Button title="Search" onPress={handleSearch} />
+          {isLoading && <Text>Searching vin... please wait...</Text>}
+          {searchResult && (
+            <Text style={main_styles.resultText}>{searchResult}</Text>
+          )}
 
-      </Stack.Screen> */}
-      <GluestackUIProvider config={config}>
-        <ScrollView>
-          <VStack space="md" reversed={false}>
-            <TextInput
-              style={main_styles.searchInput}
-              value={searchTerm}
-              onChangeText={setSearchTerm}
-              placeholder="Enter VIN"
-            />
-            <Button title="Search" onPress={handleSearch} />
-            {isLoading && <Text>Searching vin... please wait...</Text>}
-            {searchResult && (
-              <Text style={main_styles.resultText}>{searchResult}</Text>
-            )}
-
-            <LinearGradient
-              colors={["$purple400", "$blue400", "$pink300"]}
-              style={{ borderRadius: 16 }}
-            >
-              {/* ... */}
-              <Link href="https://ui.gluestack.io/docs/" isExternal>
-                <LinkText fontSize="$xl">Learn gluestack-ui</LinkText>
-              </Link>
-            </LinearGradient>
-          </VStack>
-        </ScrollView>
-      </GluestackUIProvider>
+          <LinearGradient
+            colors={["$purple400", "$blue400", "$pink300"]}
+            style={{ borderRadius: 16 }}
+          >
+            {/* ... */}
+            <Link href="https://ui.gluestack.io/docs/" isExternal>
+              <LinkText fontSize="$xl">Learn gluestack-ui</LinkText>
+            </Link>
+          </LinearGradient>
+        </VStack>
+      </ScrollView>
     </SafeAreaView>
   );
 };

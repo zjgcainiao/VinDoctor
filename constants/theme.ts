@@ -8,6 +8,8 @@ const COLORS = {
 
   white: "#F3F4F8",
   lightWhite: "#FAFAFC",
+  // Added new color for error messages
+  error: "#FF4D4D",
 };
 
 const FONT = {
@@ -19,7 +21,8 @@ const FONT = {
 const SIZES = {
   xSmall: 10,
   small: 12,
-  medium: 16,
+  normal: 16,
+  medium: 18,
   large: 20,
   xLarge: 24,
   xxLarge: 32,

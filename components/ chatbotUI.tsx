@@ -5,19 +5,29 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
+  Button,
+  FlatList,
 } from "react-native";
 
-interface OpenAIResponse {
+// Define a type for individual messages
+type Message = {
+  id: string;
+  type: "option";
+  text: string;
+};
+interface virtualAssistantResponse {
   // Define the structure of the response you expect
   id?: string;
   choices?: Array<{ text: string }>;
   error?: string;
 }
 
-const OpenAIChatComponent: React.FC = () => {
+const virtualAssistantComponent: React.FC = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [response, setResponse] = useState<OpenAIResponse | null>(null);
+  const [response, setResponse] = useState<virtualAssistantResponse | null>(
+    null
+  );
 
   const handleOpenAIRequest = async () => {
     setLoading(true);
@@ -39,7 +49,7 @@ const OpenAIChatComponent: React.FC = () => {
           }),
         }
       );
-      const data: OpenAIResponse = await response.json();
+      const data: virtualAssistantResponse = await response.json();
       setResponse(data);
     } catch (error) {
       setError("An error occurred while fetching the data.");
@@ -64,4 +74,4 @@ const OpenAIChatComponent: React.FC = () => {
   );
 };
 
-export default OpenAIChatComponent;
+export default virtualAssistantComponent;

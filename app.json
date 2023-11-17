@@ -5,7 +5,8 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "@react-native-google-signin/google-signin"
     ],
     "name": "VinDoctor",
     "slug": "vin-doctor",
@@ -20,7 +21,11 @@
       }
     },
     "ios": {
-      "bundleIdentifier": "com.automan-ai-shop.vin-doctor"
+      "bundleIdentifier": "com.holleratme420.vin-doctor"
+
+    },
+    "android": {
+
     }
   }
 }

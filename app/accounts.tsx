@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 
-import main_styles from "../styles/MainTheme.styles";
+import main_styles from "../styles/mainTheme.styles";
 
 const Accounts = () => (
   <SafeAreaView style={main_styles.container}>
