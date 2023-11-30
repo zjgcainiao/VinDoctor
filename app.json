@@ -2,11 +2,30 @@
   "expo": {
     "scheme": "acme",
     "web": {
-      "bundler": "metro"
+      "bundler": "metro",
+      "build": {
+        "babel": {
+          "include": [
+            "@babel/plugin-proposal-optional-chaining"
+          ]
+        }
+      }
     },
+    "splash": {
+      "iamge": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "assets/*",
+      "assets/images/*",
+      "assets/fonts/*",
+      "assets/icons/*"
+    ],
     "plugins": [
       "expo-router",
-      "@react-native-google-signin/google-signin"
+      "@react-native-google-signin/google-signin",
+      "sentry-expo"
     ],
     "name": "VinDoctor",
     "slug": "vin-doctor",
@@ -22,10 +41,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.holleratme420.vin-doctor"
-
     },
-    "android": {
-
-    }
+    "android": {}
   }
 }

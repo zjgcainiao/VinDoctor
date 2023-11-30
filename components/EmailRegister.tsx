@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { View, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
-const EmailRegister = () => {
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Text,Pressable } from "react-native";
+import main_styles from "../styles/MainTheme.styles";
+import { firebase_auth,firebase_app } from "./sampleFirebaseConfig";
+const EmailRegister:React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   // Function to handle the registration process
   const handleRegister = () => {
     const auth = getAuth();
-
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed up
@@ -31,7 +33,7 @@ const EmailRegister = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={main_styles.container}>
       <TextInput
         style={styles.input}
         value={email}
@@ -47,12 +49,19 @@ const EmailRegister = () => {
         placeholder="Password"
         secureTextEntry
       />
-      <Button
-        title="Register"
-        onPress={handleRegister}
-        disabled={!isInputValid()}
-      />
-    </View>
+      <Pressable
+      onPress={handleRegister}
+      disabled={!isInputValid()}
+      style={({ pressed }) => ({
+        backgroundColor: pressed ? 'lightgray' : 'black',
+        padding: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+      })}
+    >
+      <Text style={{ color: 'white' }}>Register</Text>
+    </Pressable>
+    </SafeAreaView>
   );
 };
 

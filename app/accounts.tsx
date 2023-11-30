@@ -9,13 +9,13 @@ import {
   Image,
 } from "react-native";
 
-import main_styles from "../styles/mainTheme.styles";
+import main_styles from "../styles/MainTheme.styles";
 
-const Accounts = () => (
+const Accounts: React.FC = () => (
   <SafeAreaView style={main_styles.container}>
     <ScrollView showsVerticalScrollIndicator={false}>
-      <Text style={styles.heading}>Welcome to Vin Doctor</Text>
-      <Text style={styles.description}>
+      <Text style={main_styles.heading}>Welcome to Vin Doctor</Text>
+      <Text style={main_styles.description}>
         Discover how our platform works and how it can help you.
       </Text>
 

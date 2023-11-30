@@ -1,8 +1,8 @@
 // PhoneRegister.tsx
 import React from "react";
 import { View, Text } from "react-native";
-import { RecaptchaVerifier } from "firebase/auth";
-import { firebase_auth } from "./firebaseConfig";
+// import { RecaptchaVerifier } from "firebase/auth";
+import { firebase_auth } from "../app/auth/firebaseConfig";
 
 const auth = firebase_auth;
 auth.languageCode = "it"; // /id

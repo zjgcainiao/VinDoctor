@@ -11,10 +11,11 @@ import { Ionicons } from "@expo/vector-icons"; // For the back button
 import { Stack, useNavigation } from "expo-router";
 import EmailRegister from "../components/EmailRegister";
 import PhoneRegister from "../components/PhoneRegister";
-
+import main_styles from "../styles/MainTheme.styles";
 const RegisterScreen = ({}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigation = useNavigation();
+
   React.useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
@@ -35,22 +36,24 @@ const RegisterScreen = ({}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Ionicons name="arrow-back" size={24} />
-      </TouchableOpacity>
+    <>
+      <SafeAreaView style={styles.container}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={24} />
+        </TouchableOpacity>
 
-      <SegmentedControlTab
-        values={["Email", "Phone"]}
-        selectedIndex={selectedIndex}
-        onTabPress={handleIndexChange}
-      />
+        <SegmentedControlTab
+          values={["Email", "Phone"]}
+          selectedIndex={selectedIndex}
+          onTabPress={handleIndexChange}
+        />
 
-      <View style={styles.tabContent}>{renderTabContent()}</View>
-    </SafeAreaView>
+        <View style={main_styles.tabContent}>{renderTabContent()}</View>
+      </SafeAreaView>
+    </>
   );
 };
 
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   tabContent: {
-    marginTop: 20,
+    marginTop: 50,
     // Additional styles for tab content
   },
 });

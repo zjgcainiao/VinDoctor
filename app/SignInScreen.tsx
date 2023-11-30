@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
+  SafeAreaView,
   View,
   Text,
   Animated,
@@ -8,56 +9,51 @@ import {
 } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import renderTabContent from "../components/renderTabCotentForSignIn";
-import { auth } from "../components/firebaseConfig";
+import { firebase_auth, firebase_app } from "./auth/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+import LogoTitle from "../components/LogoTitle";
+import main_styles from "../styles/MainTheme.styles";
 const SignInScreen = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const logoAnim = useRef(new Animated.Value(1)).current; // Initial scale of logo
+  const logoAnim = useRef(new Animated.Value(2.5)).current; // Initial scale of logo
+  const formOpacity = useRef(new Animated.Value(0)).current; // Initial opacity of form
 
   useEffect(() => {
     // Animate logo to scale down and move up
-    Animated.timing(logoAnim, {
-      toValue: 0.5, // Scale down to half its size
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
+    Animated.sequence([
+      Animated.timing(logoAnim, {
+        toValue: 1, // Scale down to its normal size
+        duration: 1500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(formOpacity, {
+        toValue: 1, // Gradually show the form
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
   }, []);
-
   // Use the renderTabContent function from components/renderTabContentForSignIn.tsx
   const content = renderTabContent(selectedIndex);
 
   return (
-    <View style={styles.container}>
-      <Animated.View
-        style={[styles.logo, { transform: [{ scale: logoAnim }] }]}
-      >
-        {/* Your Logo Here */}
-        <Text>Logo</Text>
+    <SafeAreaView style={main_styles.container}>
+      <Animated.View style={[{ transform: [{ scale: logoAnim }], flex: 1 }]}>
+        <LogoTitle />
       </Animated.View>
 
-      <SegmentedControlTab
-        values={["Email", "Phone"]}
-        selectedIndex={selectedIndex}
-        onTabPress={setSelectedIndex}
-      />
-
-      <View style={styles.tabContent}>{renderTabContent()}</View>
-    </View>
+      <Animated.View
+        style={[main_styles.tabContent, { opacity: formOpacity, flex: 1 }]}
+      >
+        <SegmentedControlTab
+          values={["Email", "Phone"]}
+          selectedIndex={selectedIndex}
+          onTabPress={setSelectedIndex}
+        />
+        {renderTabContent(selectedIndex)}
+      </Animated.View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  logo: {
-    // Styles for your logo
-  },
-  tabContent: {
-    marginTop: 20,
-    // Additional styles for tab content
-  },
-});
 
 export default SignInScreen;

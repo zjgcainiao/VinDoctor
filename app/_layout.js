@@ -1,54 +1,50 @@
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Drawer } from 'expo-router/drawer';
+// import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import { Stack } from 'expo-router';
-import { SafeAreaView } from "react-native";
+import { Stack } from 'expo-router/stack';
+import { Text } from 'react-native';
+import { useFonts } from 'expo-font';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { SafeAreaView } from 'react-native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 
-// Import your screen components
+export default function Layout() {
+  const [fontsLoaded] = useFonts({
+    'RobotoCondensed': require('../assets/fonts/RobotoCondensed-VariableFont_wght.ttf'),
+    'Exo2-Light': require('../assets/fonts/Exo2-Light.ttf'),
+    'Exo2-LightItalic': require('../assets/fonts/Exo2-LightItalic.ttf'),
+    'Exo2-Regular': require('../assets/fonts/Exo2-Regular.ttf'),
+    'Exo2-Thin': require('../assets/fonts/Exo2-Thin.ttf'),
+    'Exo2-SemiBold': require('../assets/fonts/Exo2-SemiBold.ttf'),
+    'Exo2-BoldItalic': require('../assets/fonts/Exo2-BoldItalic.ttf'),
+    'Exo2-Bold': require('../assets/fonts/Exo2-Bold.ttf'),
+    'ShareTechMono-Regular': require('../assets/fonts/ShareTechMono-Regular.ttf'),
+  });
 
-import Index from './index';
-import AccountScreen from './AccountScreen';
-import RegisterScreen from './RegisterScreen';
-import SignInScreen from './SignInScreen';
+  if (!fontsLoaded) {
+    return null; // or a custom loader if you prefer
+  }
 
-const Layout = () => {
+  
   return (
-
-    <SafeAreaView style={{ flex: 1 }}>
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#e7e5e4',
-          },
-          headerTintColor: '#c2410c', // orange700
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          flex: 1,
-          headerTitleAlign: 'center',
-
+    <SafeAreaProvider>
+    <Stack
+      screenOptions={{
+        headerShown:true,
+        headerTintColor: '#c2410c', // orange700
+        headerTitleStyle: {
+          fontFamily: 'Exo2-Bold', // Replace 'YourCustomFont' with the actual font family name
+          // fontWeight:700,
+        },
       }}
-      >
-        {/* <Stack.Screen name="index" />
-        <Stack.Screen name="accountScreen" />
-        <Stack.Screen name="RegisterScreen" />
-        <Stack.Screen name="SignInScreen" />
-        <Stack.Screen name="VehicleReport" /> */}
-        <Stack.Screen name="index"  />
-        <Stack.Screen name="AccountScreen" />
-        <Stack.Screen name="RegisterScreen" />
-        <Stack.Screen name="SignIn"  />
-
-      </Stack>
-      <StatusBar style="auto" />
-    </SafeAreaView>
+      />
+      </SafeAreaProvider>
+      
+    
   );
-
 };
-
-// const Layout = () => {
-//   return (<Stack />);
-// };
-
-export default Layout;

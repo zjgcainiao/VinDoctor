@@ -5,33 +5,44 @@ import {
   View,
   TextInput,
   Text,
-  Button,
-  StyleSheet,
-  RefreshControl,
+  // Button,
+  // StyleSheet,
+  Pressable,
 } from "react-native";
-import { SearchBar } from "@rneui/themed";
+
+import { RawButton } from "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
+import { RefreshControl } from "react-native-gesture-handler";
+import { SearchBar } from "@rneui/themed"; //react native elements
 import { Stack, useRouter } from "expo-router";
-import main_styles from "../styles/mainTheme.styles";
+import main_styles from "../styles/MainTheme.styles";
 import myLinearGradient from "../components/LinearGradientParts";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   GluestackUIProvider,
   ButtonText,
   Box,
-
-  // Button,
+  Button,
   HStack,
   Heading,
   Center,
   VStack,
   Image,
   StyledProvider,
+  Link,
+  LinkText,
 } from "@gluestack-ui/themed"; //gluestack-ui themed
 import { config } from "@gluestack-ui/config";
-import { Link, LinkText } from "@gluestack-ui/themed"; //gluestack-ui themed
 interface CustomLinearGradientProps extends LinearGradient {
   borderRadius: string;
 }
+
+// const CustomLinearGradient: React.FC<CustomLinearGradientProps> = ({
+//   borderRadius,
+//   ...props
+// }) => {
+//   return <LinearGradient {...props} />;
+// };
 
 const VehicleReport: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -60,29 +71,29 @@ const VehicleReport: React.FC = () => {
   return (
     <SafeAreaView style={main_styles.container}>
       <ScrollView>
-        <VStack space="md" reversed={false}>
-          <TextInput
-            style={main_styles.searchInput}
-            value={searchTerm}
-            onChangeText={setSearchTerm}
-            placeholder="Enter VIN"
-          />
-          <Button title="Search" onPress={handleSearch} />
-          {isLoading && <Text>Searching vin... please wait...</Text>}
-          {searchResult && (
-            <Text style={main_styles.resultText}>{searchResult}</Text>
-          )}
-
-          <LinearGradient
-            colors={["$purple400", "$blue400", "$pink300"]}
-            style={{ borderRadius: 16 }}
-          >
-            {/* ... */}
-            <Link href="https://ui.gluestack.io/docs/" isExternal>
-              <LinkText fontSize="$xl">Learn gluestack-ui</LinkText>
-            </Link>
-          </LinearGradient>
-        </VStack>
+        <GluestackUIProvider config={config}>
+          <VStack space="md" reversed={false} style={{ marginTop: 50 }}>
+            <TextInput
+              style={main_styles.searchInput}
+              value={searchTerm}
+              onChangeText={setSearchTerm}
+              placeholder="Enter VIN"
+              keyboardType="numeric"
+            ></TextInput>
+            <LinearGradient
+              colors={["$purple400", "$blue400", "$pink300"]}
+              style={{ borderRadius: 16 }}
+            >
+              <Pressable style={main_styles.button} onPress={handleSearch}>
+                <Text style={main_styles.buttonText}>Search</Text>
+              </Pressable>
+            </LinearGradient>
+            {isLoading && <Text>Searching vin... please wait...</Text>}
+            {searchResult && (
+              <Text style={main_styles.resultText}>{searchResult}</Text>
+            )}
+          </VStack>
+        </GluestackUIProvider>
       </ScrollView>
     </SafeAreaView>
   );

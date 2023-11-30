@@ -1,15 +1,17 @@
 const COLORS = {
-  primary: "#312651",
-  secondary: "#444262",
-  tertiary: "#FF7754",
+  primary: "#9a3412", // orange800, gluestack-ui-->default tokens
+  secondary: "#292524", // warmGray800, gluestack-ui-->default tokens
+  tertiary: "#075985", // lightBlue800, gluestack-ui-->default tokens
 
-  gray: "#83829A",
-  gray2: "#C1C0C8",
+  gray: "#e5e7eb", // coolGray200, gluestack-ui-->default tokens
+  gray2: "#6b7280", // coolGray500, gluestack-ui-->default tokens
+  gray3: "#1f2937", // coolGray800, gluestack-ui-->default tokens
 
-  white: "#F3F4F8",
+  backgroundLight: "#F5F5F5", //bavkgroundLight50 
+  white: "#F3F4F8", //
   lightWhite: "#FAFAFC",
-  // Added new color for error messages
-  error: "#FF4D4D",
+
+  error: "#991B1B", // error900, gluestack-ui-->default tokens
 };
 
 const FONT = {
@@ -51,4 +53,24 @@ const SHADOWS = {
   },
 };
 
-export { COLORS, FONT, SIZES, SHADOWS };
+const tintColorLight = '#94a3b8'; //blueGray400
+const tintColorDark = '#fff'; // white
+const THEMEMS = {
+  theme_light: {
+    text: '#000',//black text
+    background: '#F5F5F5', // backgroundLight50
+    tint: tintColorLight,
+    tabIconDefault: '#ccc',
+    tabIconSelected: tintColorLight,
+  },
+  theme_dark: {
+    text: '#fff',
+    background: "#262626", // backgroundDark900
+    tint: tintColorDark,
+    tabIconDefault: '#ccc',
+    tabIconSelected: tintColorDark,
+  },
+
+};
+
+export { COLORS, FONT, SIZES, SHADOWS, THEMEMS };

@@ -1,5 +1,5 @@
 import { StripeProvider } from "@stripe/stripe-react-native";
-import PaymentScreen from "./paymentScreen";
+import PaymentScreen from "./PaymentScreen";
 
 const publishableKey = "your_stripe_publishable_key_here";
 

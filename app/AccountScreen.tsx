@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AccountHome from "../components/AccountHome";
-
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 const AccountScreen = () => {
   const navigation = useNavigation();
   const shouldRedirect = true; // Set to true to redirect, or false otherwise
