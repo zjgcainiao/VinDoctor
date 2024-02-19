@@ -18,7 +18,7 @@ interface storeInterface {
     // isDarkMode: boolean;
     isLoggedIn: boolean;
     isInitialized: boolean;
-    user: object | null;
+    user: User | null;
 };
 //initated via firebaseConfig.ts in config folder
 const auth = firebase_auth;
@@ -34,7 +34,7 @@ const firebaseUnsubscribed = onAuthStateChanged(auth, (user) => {
     console.log("onAuthStateChanged", user);
     firebaseUserStore.update((store: storeInterface) => {
         store.isInitialized = true;
-        store.isloggedIn = user ? true : false;  // if user is null, then false, else true
+        store.isLoggedIn = user ? true : false;  // if user is null, then false, else true
         store.user = user;
         // store.isDarkMode = true;
     });
@@ -47,7 +47,7 @@ const firebaseSignIn = async (email: string, password: string) => {
         const user = userCredential.user;
         console.log("signIn", user);
         firebaseUserStore.update((store: storeInterface) => {
-            store.isloggedIn = user ? true : false;
+            store.isLoggedIn = user ? true : false;
             store.user = user;
         });
         return { user: auth.currentUser, error: null };
@@ -67,7 +67,7 @@ const firebaseSignUp = async (email: string, password: string, displayName: stri
 
         console.log("signUp new user ", user);
         firebaseUserStore.update((store: storeInterface) => {
-            store.isloggedIn = true;
+            store.isLoggedIn = true;
             store.user = user
 
         });
@@ -83,7 +83,7 @@ const firebaseSignOut = async () => {
         await signOut(auth);
         console.log("signOut");
         firebaseUserStore.update((store: storeInterface) => {
-            store.isloggedIn = false;
+            store.isLoggedIn = false;
             store.user = null;
         });
         return { user: null, error: null };

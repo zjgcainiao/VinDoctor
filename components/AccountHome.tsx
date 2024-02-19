@@ -14,7 +14,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import main_styles from "../styles/MainTheme.styles";
 import { useRef } from "react";
 import { Link } from "expo-router";
-
+import { firebaseSignOut } from "../app/auth/firebaseUserStore";
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
@@ -87,19 +87,19 @@ const AccountHome: React.FC = () => {
     })
   ).current;
 
-  console.log("navigation", navigation);
-  console.log("visible", visible);
+  console.log("navigation:", navigation);
+  console.log("visible:", visible);
   console.log("pan", pan);
-  console.log("panResponder", panResponder);
+  console.log("panResponder:", panResponder);
 
   return (
-    <SafeAreaView style= {{flex:1}}>
+    <View style= {{flex:1, minHeight:700}}>
         <Animated.View style={
             {
             transform: [{ translateX: pan.x }, { translateY: pan.y }],
             position: "absolute",
-            top: 0,
-            left: 0,
+            top: 10,
+            left: 10,
               zIndex: 10,
             }
           }
@@ -109,20 +109,32 @@ const AccountHome: React.FC = () => {
         </TouchableOpacity>
       </Animated.View>
       <View>
-      <Link href="/Accounts" >Accounts </Link>
+        <Link href="/Accounts" ><Text style={main_styles.vinText}>Accounts </Text></Link>
       </View>
-        {/* 
-          // Array.from({ length: 10 }, (_, i) => (
-          //   <View key= { i } style = { styles.card } >
-          //   <Text>Card { i + 1} </Text>
-        //   < /View>
-          // )) */ }
-      <View style={styles.card}>
+            <TouchableOpacity 
+        style={styles.Button}
+        onPress={async () => {
+          const result = await firebaseSignOut();
+          if (result.error) {
+            // Handle error (e.g., show an alert)
+            Alert.alert('Error', 'Failed to sign out.');
+          } else {
+            // Optionally, navigate to the login screen or update the UI
+          }
+        }}
+      >
+        <Ionicons name="ios-settings" size={24} color="black" />
+      </TouchableOpacity>
+
+      <View style={main_styles.card}>
+        <Text>Card 1 </Text>
+      </View>
+
+      <View style={main_styles.card}>
         <Text>Card 2 </Text>
-        
-      </View>
       
-    </SafeAreaView>
+      </View>
+    </View>
   );
 };
 

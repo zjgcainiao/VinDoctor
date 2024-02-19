@@ -24,27 +24,32 @@ export default function Layout() {
     'Exo2-BoldItalic': require('../assets/fonts/Exo2-BoldItalic.ttf'),
     'Exo2-Bold': require('../assets/fonts/Exo2-Bold.ttf'),
     'ShareTechMono-Regular': require('../assets/fonts/ShareTechMono-Regular.ttf'),
+    'Orbitron-Regular': require('../assets/fonts/Orbitron-Regular.ttf'),
+    'Orbitron-SemiBold': require('../assets/fonts/Orbitron-SemiBold.ttf'),
+    'Orbitron-Bold': require('../assets/fonts/Orbitron-Bold.ttf'),
+    'Orbitron-Black': require('../assets/fonts/Orbitron-Black.ttf'),
+    'ShareTechMono-Regular': require('../assets/fonts/ShareTechMono-Regular.ttf'),
   });
 
   if (!fontsLoaded) {
     return null; // or a custom loader if you prefer
   }
 
-  
+
   return (
-    <SafeAreaProvider>
-    <Stack
-      screenOptions={{
-        headerShown:true,
-        headerTintColor: '#c2410c', // orange700
-        headerTitleStyle: {
-          fontFamily: 'Exo2-Bold', // Replace 'YourCustomFont' with the actual font family name
-          // fontWeight:700,
-        },
-      }}
+    <SafeAreaProvider >
+      <Stack
+        screenOptions={{
+          headerShown: true,
+          headerTintColor: '#c2410c', // orange700
+          headerTitleStyle: {
+            fontFamily: 'Exo2-Bold',
+            // fontWeight:700,
+          },
+        }}
       />
-      </SafeAreaProvider>
-      
-    
+    </SafeAreaProvider>
+
+
   );
 };

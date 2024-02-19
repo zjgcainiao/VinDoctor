@@ -3,6 +3,31 @@
 import { StyleSheet } from 'react-native';
 
 const main_styles = StyleSheet.create({
+    box: {
+        flex:1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#d4af37", // gold box
+        padding: 20,
+        borderRadius: 10,
+        marginBottom: 20,
+        width: "90%", // responsive width
+        maxWidth: 200, // maximum width
+    },
+    card: {
+        flex: 1,
+        backgroundColor: 'white', // gold metallic gradient background
+        marginVertical: 8,
+        marginHorizontal: 16,
+        borderRadius: 8,
+        padding: 16,
+        shadowColor: 'black',
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+        shadowOffset: { width: 1, height: 2 },
+        elevation: 3,
+        maxHeight: 200,
+    },
     container: {
         flex: 1,
         padding: 20,
@@ -10,13 +35,20 @@ const main_styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 16,
         borderRadius: 5,
+        borderBlockColor: "gray",
         alignSelf: "center",
         width: "95%", // responsive width
         maxWidth: 1200, // maximum width
+        // minHeight:200,
         justifyContent: "center", // center vertically
         alignItems: "center", // center horizontally
     },
-
+      description: {
+        fontSize: 18,
+        marginBottom: 20,
+        color: "#ddd", // light gray text
+        textAlign: "center", // center text
+    },
     heading: {
         fontSize: 28,
         fontWeight: "bold",
@@ -24,16 +56,14 @@ const main_styles = StyleSheet.create({
         color: "#fff", // white text
         textAlign: "center", // center text
     },
-    description: {
-        fontSize: 18,
-        marginBottom: 20,
-        color: "#ddd", // light gray text
-        textAlign: "center", // center text
-    },
+
     input: {
-        height: 40,
+        // flex:1,
+        minHeight: 25,
         borderColor: '#888', //#888 is gray
+        padding: 12,
         borderWidth: 1,
+        marginVertical: 8,
         borderRadius: 5,
         paddingHorizontal: 10,
         backgroundColor: "#fff", // white background
@@ -41,6 +71,7 @@ const main_styles = StyleSheet.create({
         width: "80%", // responsive width
         maxWidth: 500, // maximum width
     },
+
     searchButton: {
         marginTop: 10,
         height: 40,
@@ -48,14 +79,16 @@ const main_styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
-        width: "100%", // responsive width
-        maxWidth: 500, // maximum width
+        width: "90%", // responsive width
+        maxWidth: 200, // maximum width
     },
 
     resultsContainer: {
+        flex:1,
         marginTop: 20,
-        width: "100%", // responsive width
-        maxWidth: 500, // maximum width
+        width: "95%", // responsive width
+        minWidth: 200, // minimum width
+        maxWidth: 600, // maximum width
     },
     resultItem: {
         padding: 10,
@@ -64,36 +97,17 @@ const main_styles = StyleSheet.create({
     },
     vinText: {
         fontSize: 16,
+        fontFamily: "Exo2-Bold",
+        color: "#333333", // darker silver metallic color
+        marginTop: 10, // Add marginTop property
     },
-    logo: {
-        width: 200, // Adjust as needed
-        height: 150, // Adjust as needed
-        resizeMode: "contain",
-    },
-    navbar: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 10,
-        backgroundColor: "transparent", //'#333',
-        width: "100%", // responsive width
-        maxWidth: 500, // maximum width
-    },
+    
     title: {
         color: 'white',
         fontSize: 24,
     },
 
-    box: {
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#d4af37", // gold box
-        padding: 20,
-        borderRadius: 10,
-        marginBottom: 20,
-        width: "90%", // responsive width
-        maxWidth: 500, // maximum width
-    },
+    
     searchInput: {
         flex: 1,
         borderWidth: 1,

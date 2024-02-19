@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Pressable,
 } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { Ionicons } from "@expo/vector-icons"; // For the back button
@@ -12,7 +13,7 @@ import { Stack, useNavigation } from "expo-router";
 import EmailRegister from "../components/EmailRegister";
 import PhoneRegister from "../components/PhoneRegister";
 import main_styles from "../styles/MainTheme.styles";
-const RegisterScreen = ({}) => {
+const RegisterScreen:React.FC = ({}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigation = useNavigation();
 
@@ -71,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export { RegisterScreen};

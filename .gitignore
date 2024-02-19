@@ -16,9 +16,11 @@ web-build/
 
 .idea/
 
+.vscode/
 
 # build folder
 ios/
+
 android/
 android/*
 

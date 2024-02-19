@@ -25,12 +25,13 @@
     "plugins": [
       "expo-router",
       "@react-native-google-signin/google-signin",
-      "sentry-expo"
+      "sentry-expo",
+      "expo-apple-authentication"
     ],
     "name": "VinDoctor",
     "slug": "vin-doctor",
-    "owner": "holleratme420",
-    "desription": "your online, AI-powered, doctor for your vehicles, providng detailed, updated technical and safety information, vehicle history info; help you make machine learning based estimates and search parts inforamtion. ",
+    "owner": "holleratme420.com(Yin Wang)",
+    "desription": "your AI-powered,online doctor for your vehicles, providng detailed, updated technical and safety information, vehicle history info; help you make machine learning based estimates and search parts inforamtion. ",
     "extra": {
       "router": {
         "origin": false

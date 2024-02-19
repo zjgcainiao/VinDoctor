@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 
-import main_styles from "../styles/MainTheme.styles";
+import main_styles from "../../styles/MainTheme.styles";
 
 const Accounts: React.FC = () => (
   <SafeAreaView style={main_styles.container}>
@@ -22,7 +22,8 @@ const Accounts: React.FC = () => (
       <Button
         title="Sign Up"
         onPress={() => {
-          /* Sign Up Logic */
+            /* Sign Up Logic */
+            1+1 ;
         }}
       />
     </ScrollView>

@@ -28,39 +28,32 @@ import LogoTitle from "../components/LogoTitle";
 import { LinearGradient } from "expo-linear-gradient";
 import { firebaseUserStore } from "./auth/firebaseUserStore";
 import { useStoreState } from "pullstate";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged,getAuth } from "firebase/auth";
 
 const IndexPage: React.FC = () => {
-  // const [open, setOpen] = useState(false);
-  // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  // // return <Redirect href="/home" />;
-  // // config={config}
-
-  // // Inside your component
-  // const navigation = useNavigation();
-  // useEffect(() => {
-  //   const auth = firebase_auth;
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       setIsLoggedIn(true);
-  //       // Optionally redirect to the home page
-  //       // navigation.navigate('Home');
-  //     } else {
-  //       setIsLoggedIn(false);
-  //     }
-  //   });
-  //   return () => unsubscribe(); // This ensures the listener is unsubscribed when the component unmounts
-  // }, []);
-
   const router = useRouter();
   //let store = useStoreState(firebaseUserStore);
-  // const isLoggedIn = store.isLoggedIn;
-  // const isInitiated = store.isInitiated;
+  const segments = useSegments();
+  const navigationState = useRootNavigationState();
   const { isLoggedIn, isInitialized } = firebaseUserStore.useState();
-  // let isLoggedIn = false;
+
+  // // Inside your component
+  const navigation = useNavigation();
+  useEffect(() => {
+    if (!navigationState?.key || !isInitialized) return;
+    if (!isLoggedIn) {
+      //redirect to the login page
+      router.replace("SignInScreen");
+    } else {
+      router.replace("AccountScreen");
+    }
+  }, [segments,navigationState?.key, isInitialized]);
+
+
+
   return (
     <LinearGradient
-      colors={["#97989a", "#d1d3d5", "#555d61"]}
+      colors={["#97989a", "#d1d3d5", "#555d61"]} //"#97989a" - color of the top, "#d1d3d5" - color of the bottom
       start={{ x: 0.0, y: 0.0 }}
       end={{ x: 1.0, y: 1.0 }}
       style={main_styles.container}

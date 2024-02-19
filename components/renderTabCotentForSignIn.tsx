@@ -56,7 +56,7 @@ const renderTabContent = (selectedIndex: number) => {
   return (
     <SafeAreaView style={formStyles}>
       {selectedIndex === 0 ? (
-        <>
+        <View style={main_styles.container}>
           <TextInput
             style={main_styles.input}
             value={email}
@@ -73,7 +73,7 @@ const renderTabContent = (selectedIndex: number) => {
             secureTextEntry
           />
           <Button title="Sign In with Email" onPress={handleEmailSignIn} />
-        </>
+        </View>
       ) : (
         <>
           <TextInput
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   phoneForm: {
+    minHeight: 200,
     width: "80%",
     justifyContent: "center",
     alignItems: "center",
