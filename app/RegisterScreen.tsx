@@ -13,7 +13,8 @@ import { Stack, useNavigation } from "expo-router";
 import EmailRegister from "../components/EmailRegister";
 import PhoneRegister from "../components/PhoneRegister";
 import main_styles from "../styles/MainTheme.styles";
-const RegisterScreen:React.FC = ({}) => {
+
+const RegisterScreen: React.FC = ({ }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigation = useNavigation();
 
@@ -38,22 +39,22 @@ const RegisterScreen:React.FC = ({}) => {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
+    <SafeAreaView style= { styles.container }>
+    <TouchableOpacity
+          style={ styles.backButton }
+  onPress = {() => navigation.goBack()}
         >
-          <Ionicons name="arrow-back" size={24} />
-        </TouchableOpacity>
+  <Ionicons name="arrow-back" size = { 24} />
+    </TouchableOpacity>
 
-        <SegmentedControlTab
-          values={["Email", "Phone"]}
-          selectedIndex={selectedIndex}
-          onTabPress={handleIndexChange}
-        />
+    <SegmentedControlTab
+    values = { ["Email", "Phone"]}
+    selectedIndex = { selectedIndex }
+    onTabPress = { handleIndexChange }
+    />
 
-        <View style={main_styles.tabContent}>{renderTabContent()}</View>
-      </SafeAreaView>
+  <View style={ main_styles.tabContent }> { renderTabContent() } </View>
+    </SafeAreaView>
     </>
   );
 };
@@ -72,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { RegisterScreen};
+export { RegisterScreen };

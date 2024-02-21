@@ -1,6 +1,6 @@
 {
   "name": "vindoctor",
-  "version": "1.0.0",
+  "version": "1.0",
   "main": "expo-router/entry",
   "scripts": {
     "start": "npx expo start",
@@ -36,7 +36,7 @@
     "axios": "^1.5.1",
     "babel-plugin-module-resolver": "^5.0.0",
     "babel-plugin-styled-components": "^2.1.4",
-    "expo": "^49.0.3",
+    "expo": "^49.0.21",
     "expo-apple-authentication": "~6.1.0",
     "expo-application": "^5.4.0",
     "expo-build-properties": "~0.8.3",
@@ -60,7 +60,7 @@
     "expo-sqlite": "~11.3.3",
     "expo-status-bar": "~1.6.0",
     "expo-task-manager": "~11.3.0",
-    "firebase": "^10.6.0",
+    "firebase": "^10.8.0",
     "mocha": "^10.2.0",
     "nativewind": "^2.0.11",
     "openai": "^4.16.1",

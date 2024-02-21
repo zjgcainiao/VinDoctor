@@ -12,7 +12,7 @@
       }
     },
     "splash": {
-      "iamge": "./assets/images/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,6 +23,11 @@
       "assets/icons/*"
     ],
     "plugins": [
+    [ "@stripe/stripe-react-native",
+      {
+        "merchantIdentifier": "merchant.com.holleratme420.vin-doctor",
+        "enableGooglePay": true
+      }],
       "expo-router",
       "@react-native-google-signin/google-signin",
       "sentry-expo",
@@ -31,7 +36,7 @@
     "name": "VinDoctor",
     "slug": "vin-doctor",
     "owner": "holleratme420.com(Yin Wang)",
-    "desription": "your AI-powered,online doctor for your vehicles, providng detailed, updated technical and safety information, vehicle history info; help you make machine learning based estimates and search parts inforamtion. ",
+    "description": "your AI-powered,online doctor for your vehicles, providng detailed, updated technical and safety information, vehicle history info; help you make machine learning based estimates and search parts inforamtion. ",
     "extra": {
       "router": {
         "origin": false
