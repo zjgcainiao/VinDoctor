@@ -49,7 +49,7 @@ web-build/
 # Firebase config.ts file. located in /app/config/
 firebaseConfig.ts
 
-eas.json
+# eas.json
 
-GoogleService-Info.plist
-GoogleService-Info.plist/
+# GoogleService-Info.plist
+# GoogleService-Info.plist/

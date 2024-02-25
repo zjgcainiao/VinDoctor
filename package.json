@@ -6,7 +6,8 @@
     "start": "npx expo start",
     "android": "npx expo run:android",
     "ios": "npx expo run:ios",
-    "web": "npx expo start --web"
+    "web": "npx expo start --web",
+    "eas-build-pre-install": "./update_podfile.sh"
   },
   "dependencies": {
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
