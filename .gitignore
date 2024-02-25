@@ -18,11 +18,7 @@ web-build/
 
 .vscode/
 
-# build folder
-ios/
 
-android/
-android/*
 
 # misc
 # .gitignore
@@ -48,6 +44,13 @@ web-build/
 
 # Firebase config.ts file. located in /app/config/
 firebaseConfig.ts
+
+
+# build folder
+# ios/
+
+android/
+android/*
 
 # eas.json
 

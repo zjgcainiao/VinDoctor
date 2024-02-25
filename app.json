@@ -5,9 +5,7 @@
       "bundler": "metro",
       "build": {
         "babel": {
-          "include": [
-            "@babel/plugin-proposal-optional-chaining"
-          ]
+          "include": ["@babel/plugin-proposal-optional-chaining"]
         }
       }
     },
@@ -23,6 +21,15 @@
       "assets/icons/*"
     ],
     "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "modularHeaders": true,
+            "deploymentTarget": "17.0"
+          }
+        }
+      ],
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
       [

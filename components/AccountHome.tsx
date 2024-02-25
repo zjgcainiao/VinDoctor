@@ -99,9 +99,9 @@ const AccountHome: React.FC = () => {
             {
             transform: [{ translateX: pan.x }, { translateY: pan.y }],
             position: "absolute",
-            top: 10,
-            left: 10,
-              zIndex: 10,
+            top: 5,
+            right: 5,
+              zIndex: 20,
             }
           }
           {...panResponder.panHandlers }>
@@ -117,11 +117,16 @@ const AccountHome: React.FC = () => {
       <View style={styles.card}>
         <Text> User Info </Text>
         <Text> {user?.email} </Text>
-        <Text> {user?.displayName} </Text>
+        <Text> Name: {user?.displayName} </Text>
         <Text> {user?.phoneNumber} </Text>
+
       </View>
 
-
+        <View>
+          <Link href="/VehicleReport" style={main_styles.mutedButton}>
+            <Text>Get a vin report </Text>
+          </Link>
+        </View>
       
       
     </View>

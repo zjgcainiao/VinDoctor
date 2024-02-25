@@ -45,30 +45,45 @@ const firebasePhoneSignIn = async (phoneNumber: string) => {
         Alert.alert("Error", "Phone sign-in failed.");
         return { confirmationResult: null, error: error };
     }
-}
+};
 
 const firebaseSignIn = async (email: string, password: string) => {
     try {
         // signInWithEmailAndPassword is directly called on the auth() returned object.
-        const userCredential = auth().signInWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-        const token = user ? user.getIdToken() : null;
-        const uid = user ? user.uid : null;
-        console.log("signIn firebase User:", user,'token:', token);
-        firebaseUserStore.update((store: storeInterface) => {
-            store.isInitialized = user ? true : false;
-            store.isLoggedIn = user ? true : false;
-            store.user = user;
-            store.token = token;
-            store.uid = uid;
-            
-        });
+       auth().signInWithEmailAndPassword(email, password)
+       .then(()=>{
+            console.log('Sign-in successful');
+            user = auth().currentUser;
+            const token = user ? user.getIdToken() : null;
+            const uid = user ? user.uid : null;
+            console.log("signIn firebase User:", user,'token:', token);
 
-        return { user: auth.currentUser, error: null };
+            firebaseUserStore.update((store: storeInterface) => {
+                store.isInitialized = user ? true : false;
+                store.isLoggedIn = user ? true : false;
+                store.user = user;
+                store.token = token;
+                store.uid = uid;
+              });
+
+        })
+        .catch(error=>{
+
+            if (error.code === 'auth/invalid-email') {
+                console.log('That email address is invalid!');
+            } else if (error.code === 'auth/user-not-found') {
+                console.log('No user found with that email address.');
+            } else if (error.code === 'auth/email-already-in-use') {
+                console.log('This email is already in use!');
+            } else {
+                console.log('Error:', error.message);
+            }
+        });
+        return { user: auth().currentUser, error: null };
     } catch (error) {
         console.log("signIn error", error);
         return { user: null, error: error };
-    }
+    };
 };
 
 const firebaseSignUp = async (email: string, password: string, displayName: string) => {

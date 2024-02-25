@@ -234,7 +234,7 @@ const VehicleReport: React.FC = () => {
 
       if (validEndpoints.includes(endpoint)) {
           // Here, queryParams is already prefixed with ?, so we directly concatenate
-          const newUrl = `http://127.0.0.1:8000/apis/${endpoint}/${queryParams}`;
+          const newUrl = `https://new76prolubeplus.com/apis/${endpoint}/${queryParams}`;
           setUrl(newUrl);
       } else {
           setError(new Error("Invalid endpoint"));

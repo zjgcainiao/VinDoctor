@@ -54,24 +54,11 @@ const renderTabContentForSignIn = (selectedIndex: number) => {
     }
 
     try {
-        // signInWithEmailAndPassword is directly called on the auth() returned object.
-        const userCredential = auth().signInWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-        const token = user ? user.getIdToken() : null;
-        const uid = user ? user.uid : null;
-        console.log("signIn firebase User:", user,'token:', token);
-        firebaseUserStore.update((store: storeInterface) => {
-            store.isInitialized = user ? true : false;
-            store.isLoggedIn = user ? true : false;
-            store.user = user;
-            store.token = token;
-            store.uid = uid;
-            
-        });
-      // Firebase auth logic for email sign-in
+      // Ensure firebaseSignIn is an async function and await its result
+      firebaseSignIn(email, password);
       Alert.alert("Success", "Sign In successful!");
 
-      firebaseSignIn(email, password);
+      // firebaseSignIn(email, password);
       router.replace("/accounts/AccountScreen");  
       } catch (error) {
         console.log("signIn error", error);

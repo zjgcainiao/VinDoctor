@@ -8,13 +8,16 @@
         "STRIPE_SECRET_TEST_KEY": "sk_test_51O27ZHJQdPkpRk8HCjHdJoopVLgQDg47OqTmCS0fgTxmuNDo8OzgJZESjGuvCMWvdfig3YBCKusrR9Il3FPPAenq009YQaIJHg",
         "STRIPE_PUBLIC_LIVE_KEY": "pk_live_51O27ZHJQdPkpRk8HQLcs64uJOyUL1eBgwQNJ5VMuqQmnp6r9OI7D74Iis6IAZndWx40ml5ycEu8EhfiN7bUcaxOZ00npP0edxL",
         "STRIPE_SECRET_LIVE_KEY": "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"
-      },
-      "hooks": {
-        "preInstall": "./update_podfile.sh"
       }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "STRIPE_PUBLIC_TEST_KEY": "pk_test_51O27ZHJQdPkpRk8HuzWAElLfKatvTuF6cfeCloCfB4lumooZcazJhvZKETo4FE7NWxX73E1BqmhFwZH7b2i5RVS900ooTWV626",
+        "STRIPE_SECRET_TEST_KEY": "sk_test_51O27ZHJQdPkpRk8HCjHdJoopVLgQDg47OqTmCS0fgTxmuNDo8OzgJZESjGuvCMWvdfig3YBCKusrR9Il3FPPAenq009YQaIJHg",
+        "STRIPE_PUBLIC_LIVE_KEY": "pk_live_51O27ZHJQdPkpRk8HQLcs64uJOyUL1eBgwQNJ5VMuqQmnp6r9OI7D74Iis6IAZndWx40ml5ycEu8EhfiN7bUcaxOZ00npP0edxL",
+        "STRIPE_SECRET_LIVE_KEY": "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"
+      }
     },
     "production": {
       "env": {
@@ -22,9 +25,6 @@
         "STRIPE_SECRET_TEST_KEY": "sk_test_51O27ZHJQdPkpRk8HCjHdJoopVLgQDg47OqTmCS0fgTxmuNDo8OzgJZESjGuvCMWvdfig3YBCKusrR9Il3FPPAenq009YQaIJHg",
         "STRIPE_PUBLIC_LIVE_KEY": "pk_live_51O27ZHJQdPkpRk8HQLcs64uJOyUL1eBgwQNJ5VMuqQmnp6r9OI7D74Iis6IAZndWx40ml5ycEu8EhfiN7bUcaxOZ00npP0edxL",
         "STRIPE_SECRET_LIVE_KEY": "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"
-      },
-      "hooks": {
-        "preInstall": "./update_podfile.sh"
       }
     }
   }
