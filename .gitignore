@@ -30,7 +30,7 @@ android/*
 .env.local
 .env
 .env*
-
+eas.json
 # Firebase config.ts file. located in /app/config/
 firebaseConfig.ts
 
