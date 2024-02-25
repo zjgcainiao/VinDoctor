@@ -3,12 +3,14 @@ import { View, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text,Pressable } from "react-native";
-import main_styles from "../styles/MainTheme.styles";
+import main_styles from '../styles/MainTheme.styles';
 import {firebaseSignUp} from "../app/auth/firebaseUserStore";
-
+import {firebaseUserStore} from "../app/auth/firebaseUserStore";
 const EmailRegister:React.FC = () => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { isLoggedIn, user } = firebaseUserStore.useState();
 
 
   // Basic validation (can be enhanced as needed)
@@ -42,7 +44,7 @@ const EmailRegister:React.FC = () => {
           justifyContent: 'center',
           alignItems: 'center',
         })}
-      >
+        >
         <Text style={{ color: 'white' }}>Register</Text>
       </Pressable>
     </View>
@@ -50,22 +52,21 @@ const EmailRegister:React.FC = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    flex:1  ,
-    display: "block",
+    // flex:1  ,
+    width: "100%", // Make the container take the full width of the screen  
     paddingTop: 20,
     paddingHorizontal: 10,
     backgroundColor: 'transparent',
-
     justifyContent: 'upper',
     alignItems: 'center',
   },
   input: {
     width: '100%', // Make input fiel  ds take the full width of the container
     // Remove maxWidth or adjust it appropriately
-    padding: 5,
-
+    padding: 10,
+    alignItems: 'center',
     // flexDirection: '',
-    marginVertical: 8,
+    marginVertical: 10,
     borderWidth: 1,
     borderColor: "gray",
     borderRadius: 5,

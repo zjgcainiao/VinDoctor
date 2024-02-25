@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import { StatusBar } from 'expo-status-bar';
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import renderTabContentForSignIn from '../components/renderTabContentForSignIn';
 
@@ -19,14 +20,14 @@ const SignInScreen = () => {
   const [selectedIndex, setSelectedIndex] = useState(Number<0>);
   const logoAnim = useRef(new Animated.Value(2.5)).current; // Initial scale of logo
   const formOpacity = useRef(new Animated.Value(0)).current; // Initial opacity of form
- const { isLoggedIn, user } = firebaseUserStore.useState();
+  const { isLoggedIn, user } = firebaseUserStore.useState();
 
   useEffect(() => {
     // Animate logo to scale down and move up
     Animated.sequence([
       Animated.timing(logoAnim, {
         toValue: 1, // Scale down to its normal size
-        duration: 150,  
+        duration: 300,  
         useNativeDriver: true,
       }),
       Animated.timing(formOpacity, {
@@ -55,6 +56,7 @@ const SignInScreen = () => {
         {renderTabContentForSignIn(selectedIndex)}
       </Animated.View>
     </View>
+
   );
 };
 

@@ -30,9 +30,9 @@ android/*
 .env.local
 .env
 .env*
-eas.json
-# Firebase config.ts file. located in /app/config/
-firebaseConfig.ts
+
+
+
 
 .env
 .env*.local
@@ -45,6 +45,11 @@ firebaseConfig.ts
 .expo
 dist/
 web-build/
+
+# Firebase config.ts file. located in /app/config/
+firebaseConfig.ts
+
+eas.json
 
 GoogleService-Info.plist
 GoogleService-Info.plist/

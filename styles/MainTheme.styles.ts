@@ -3,6 +3,23 @@
 import { StyleSheet } from 'react-native';
 
 const main_styles = StyleSheet.create({
+
+      tabsContainerStyle: {
+    borderColor: 'black',
+  },
+  tabStyle: {
+    borderColor: 'black',
+    backgroundColor: 'white',
+  },
+  activeTabStyle: {
+    backgroundColor: 'black',
+  },
+  tabTextStyle: {
+    color: 'black',
+  },
+  activeTabTextStyle: {
+    color: 'white',
+  },
     box: {
         flex:1,
         justifyContent: "center",
@@ -30,19 +47,19 @@ const main_styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        alignItems: 'stretch',
-        padding: 10,
+        justifyContent: "center", // center vertically
+        alignItems: "center", // center horizontally
+        margin:20,
+        padding: 20, // Adjust padding as needed
         //backgroundColor: '#e7e5e4', //'#1c1c1c'-- dark gray background.  '#e7e5e4' is the warmGray200 settingin gluestack-ui-->default tokens
         paddingHorizontal: 10,
         paddingVertical: 10,
-        borderRadius: 5,
+        borderRadius: 20,
         borderBlockColor: "gray",
         alignSelf: "center",
         width: "95%", // responsive width
         maxWidth: 1200, // maximum width
         // minHeight:200,
-        justifyContent: "center", // center vertically
-        alignItems: "center", // center horizontally
     },
       description: {
         fontSize: 18,
@@ -62,13 +79,14 @@ const main_styles = StyleSheet.create({
         flex:1,
         flexDirection: "column",   
         borderColor: '#888', //#888 is gr   ay
-        padding: 2,
-        borderWidth: 1,
+        padding: 10,
+        borderWidth: 2,
         marginVertical: 8,
         borderRadius: 5,
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         backgroundColor: "#fff", // white background
-        marginBottom: 10,
+        marginBottom: 20,
+        justifyContent: "center",
         width: "90%", // responsive width
         // maxWidth: 500, // maximum width
     },

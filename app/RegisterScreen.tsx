@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef,useEffect } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Pressable,
+    Animated,
 } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { Ionicons } from "@expo/vector-icons"; // For the back button
@@ -16,15 +17,34 @@ import PhoneRegister from "../components/PhoneRegister";
 import main_styles from "../styles/MainTheme.styles";
 // import { ScrollView } from 'react-native-gesture-handler';
 import LogoTitle from '../components/LogoTitle';
-
+import {firebaseUserStore} from "../app/auth/firebaseUserStore";
 
 const RegisterScreen: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(Number(0));
   const navigation = useNavigation();
+  const logoAnim = useRef(new Animated.Value(2.5)).current; // Initial scale of logo
+  const formOpacity = useRef(new Animated.Value(0)).current; // Initial opacity of form
+  const { isLoggedIn, user } = firebaseUserStore.useState();
 
   React.useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
+
+  useEffect(() => {
+    // Animate logo to scale down and move up
+    Animated.sequence([
+      Animated.timing(logoAnim, {
+        toValue: 1, // Scale down to its normal size
+        duration: 300,  
+        useNativeDriver: true,
+      }),
+      Animated.timing(formOpacity, {
+        toValue: 1, // Gradually show the form
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
 
   const renderTabContent = () => {
     switch (selectedIndex) {
@@ -39,8 +59,10 @@ const RegisterScreen: React.FC = () => {
 
   return (
     
-      <View style={ main_styles.container }>
+      <View style={main_styles.container}>
+      <Animated.View style={[styles.logo, { transform: [{ scale: logoAnim }] }]}>
         <LogoTitle />
+      </Animated.View>
         <TouchableOpacity
               style={ main_styles.backButton }
               onPress={() => navigation.goBack()}
@@ -49,10 +71,14 @@ const RegisterScreen: React.FC = () => {
         </TouchableOpacity>
         
           <SegmentedControlTab 
-          style={styles.tabContainer}
           values={ ["Email", "Phone"]}
           selectedIndex={ selectedIndex }
           onTabPress={ setSelectedIndex }
+          tabsContainerStyle={{ borderColor: 'black' }}
+          tabStyle={{ borderColor: 'black', backgroundColor: 'white' }}
+          activeTabStyle={{ backgroundColor: 'black' }}
+          tabTextStyle={{ color: 'black' }}
+          activeTabTextStyle={{ color: 'white' }}
           />
         
         { renderTabContent(selectedIndex) }

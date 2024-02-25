@@ -1,6 +1,6 @@
 {
   "name": "vindoctor",
-  "version": "1.0",
+  "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
     "start": "npx expo start",
@@ -16,6 +16,7 @@
     "@babel/plugin-transform-template-literals": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
     "@babel/runtime": "^7.23.4",
+    "@expo/config-plugins": "~7.2.2",
     "@expo/html-elements": "^0.5.1",
     "@expo/vector-icons": "^13.0.0",
     "@gluestack-style/animation-resolver": "^1.0.2",
@@ -49,7 +50,6 @@
     "expo-in-app-purchases": "~14.3.0",
     "expo-linear-gradient": "~12.3.0",
     "expo-linking": "~5.0.2",
-    "expo-modules-autolinking": "~1.5.0",
     "expo-network": "~5.4.0",
     "expo-router": "2.0.0",
     "expo-secure-store": "~12.3.1",
@@ -59,7 +59,6 @@
     "expo-sqlite": "~11.3.3",
     "expo-status-bar": "~1.6.0",
     "expo-task-manager": "~11.3.0",
-    "firebase": "^10.8.0",
     "mocha": "^10.2.0",
     "nativewind": "^2.0.11",
     "openai": "^4.16.1",
@@ -95,7 +94,6 @@
     "@tsconfig/react-native": "^3.0.2",
     "@types/jest": "^29.5.6",
     "@types/react": "^18.2.30",
-    "@types/react-native": "^0.72.7",
     "@types/react-test-renderer": "^18.0.5",
     "typedoc": "^0.25.3",
     "typescript": "^5.2.x"
