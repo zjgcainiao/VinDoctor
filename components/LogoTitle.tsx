@@ -1,10 +1,10 @@
 import React from "react";
 import { Image } from "react-native";
 
-const LogoTitle = () => {
+const LogoTitle: React.FC   = () => {
   return (
     <Image
-      style={{ width: 150, height: 90 }}
+      style={{ width: 150, height: 100 }}
       source={require("../assets/icon.png")}
     />
   );

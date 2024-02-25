@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   SafeAreaView,
+  ScrollView,
   View,
   Text,
   TouchableOpacity,
@@ -9,22 +10,21 @@ import {
 } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { Ionicons } from "@expo/vector-icons"; // For the back button
-import { Stack, useNavigation } from "expo-router";
+import { useNavigation } from "expo-router";
 import EmailRegister from "../components/EmailRegister";
 import PhoneRegister from "../components/PhoneRegister";
 import main_styles from "../styles/MainTheme.styles";
+// import { ScrollView } from 'react-native-gesture-handler';
+import LogoTitle from '../components/LogoTitle';
 
-const RegisterScreen: React.FC = ({ }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+
+const RegisterScreen: React.FC = () => {
+  const [selectedIndex, setSelectedIndex] = useState(Number(0));
   const navigation = useNavigation();
 
   React.useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
-
-  const handleIndexChange = (index: React.SetStateAction<number>) => {
-    setSelectedIndex(index);
-  };
 
   const renderTabContent = () => {
     switch (selectedIndex) {
@@ -38,24 +38,26 @@ const RegisterScreen: React.FC = ({ }) => {
   };
 
   return (
-    <>
-    <SafeAreaView style= { styles.container }>
-    <TouchableOpacity
-          style={ styles.backButton }
-  onPress = {() => navigation.goBack()}
-        >
-  <Ionicons name="arrow-back" size = { 24} />
-    </TouchableOpacity>
-
-    <SegmentedControlTab
-    values = { ["Email", "Phone"]}
-    selectedIndex = { selectedIndex }
-    onTabPress = { handleIndexChange }
-    />
-
-  <View style={ main_styles.tabContent }> { renderTabContent() } </View>
-    </SafeAreaView>
-    </>
+    
+      <View style={ main_styles.container }>
+        <LogoTitle />
+        <TouchableOpacity
+              style={ main_styles.backButton }
+              onPress={() => navigation.goBack()}
+            >
+          <Ionicons name="arrow-back" size = { 24} />
+        </TouchableOpacity>
+        
+          <SegmentedControlTab 
+          style={styles.tabContainer}
+          values={ ["Email", "Phone"]}
+          selectedIndex={ selectedIndex }
+          onTabPress={ setSelectedIndex }
+          />
+        
+        { renderTabContent(selectedIndex) }
+      </View>
+    
   );
 };
 
@@ -63,14 +65,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+        marginTop: 50,
   },
   backButton: {
-    marginBottom: 10,
+    alignSelf: 'flex-start', // Align the back button to the left
+    marginBottom: 20, // Add some space below the back button
   },
-  tabContent: {
-    marginTop: 50,
-    // Additional styles for tab content
+
+  tabContainer: {
+    alignitems:'stretch',
+    backgroundColor: 'transparent', // For the SegmentedControlTab to inherit the LinearGradient
+    marginBottom: 20, // Adjust the space between the tabs and the content below
+    color: 'black', // Change the color to black
   },
 });
 
-export { RegisterScreen };
+export default RegisterScreen ;

@@ -30,10 +30,11 @@ const main_styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        padding: 20,
+        alignItems: 'stretch',
+        padding: 10,
         //backgroundColor: '#e7e5e4', //'#1c1c1c'-- dark gray background.  '#e7e5e4' is the warmGray200 settingin gluestack-ui-->default tokens
-        paddingHorizontal: 20,
-        paddingVertical: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
         borderRadius: 5,
         borderBlockColor: "gray",
         alignSelf: "center",
@@ -58,18 +59,18 @@ const main_styles = StyleSheet.create({
     },
 
     input: {
-        // flex:1,
-        minHeight: 25,
-        borderColor: '#888', //#888 is gray
-        padding: 12,
+        flex:1,
+        flexDirection: "column",   
+        borderColor: '#888', //#888 is gr   ay
+        padding: 2,
         borderWidth: 1,
         marginVertical: 8,
         borderRadius: 5,
         paddingHorizontal: 10,
         backgroundColor: "#fff", // white background
         marginBottom: 10,
-        width: "80%", // responsive width
-        maxWidth: 500, // maximum width
+        width: "90%", // responsive width
+        // maxWidth: 500, // maximum width
     },
 
     searchButton: {
@@ -107,24 +108,30 @@ const main_styles = StyleSheet.create({
         fontSize: 24,
     },
 
-    
+    tabContent: {
+        flex:1,
+        marginTop: 50,
+        marginBottom: 20,
+        // Additional styles for tab content
+    },
+
     searchInput: {
-        flex: 1,
+        flex: 3,
+        alignItems: 'stretch',
         borderWidth: 1,
         borderRadius: 5,
-        padding: 12,
-        paddingHorizontal: 10,
-        background: 'linear-gradient(90deg, #C0C0C0 0%, #C0C0C0 50%, #FFF 50%)', // silver metallic gradient background
+        padding: 5,
+        paddingHorizontal: 5,
         marginBottom: 10,
         width: "100%", // responsive width
-        maxWidth: 500, // maximum width
+        maxWidth: 50, // maximum width
     },
 
     resultText: {
         marginTop: 20,
         fontSize: 18,
         fontWeight: "bold",
-        fontFamily: "RobotoCondensed_family",
+        fontFamily: "NotoSansMono-Regular",
         color: "#000212", // white text
         textAlign: "center", // center text
     },
@@ -165,32 +172,28 @@ const main_styles = StyleSheet.create({
     buttonText: {
         color: '#000', // black text. '#FFF' white text
         fontWeight: 'bold',
-        fontFamily: "RobotoCondensed",
+        fontFamily: "NotoSansMono-Medium",
         letterSpacing: 0.25,
     },
 
     backButton: {
-        marginBottom: 10,
+        alignSelf: 'flex-start', // Align the back button to the left
+        marginBottom: 20, // Add some space below the back button
     },
     //darker grey button
     mutedButton: {
         backgroundColor: "transparent", // "#e7e5e4" gray
-        color: "#fb923c", // Muted text color #57534e warmgray600. #fb923c orange400
+        color: "#9a3412", // Muted text color #57534e warmgray600. #fb923c orange400. #1f2937 coolgray800. #9a3412, orange800.
         textAlign: "center",
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 15,
+        fontFamily: "Exo2-Semibold",
     },
     mutedButtonText: {
         color: "#78716c", // #78716c warmgray400
         // letterSpacing: 1.5,
-        fontFamily: "ShareTechMono-Regular",
-    },
-    tabContent: {
-        flex:1,
-        marginTop: 50,
-        marginBottom: 20,
-        // Additional styles for tab content
+        fontFamily: "Exo2-Bold",
     },
 
 

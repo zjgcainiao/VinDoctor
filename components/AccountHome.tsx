@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -8,34 +8,18 @@ import {
   StyleSheet,
   PanResponder,
   Animated,
+  Alert,
+  TextInput, Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons"; // For the back button
 import main_styles from "../styles/MainTheme.styles";
 import { useRef } from "react";
 import { Link } from "expo-router";
 import { firebaseSignOut } from "../app/auth/firebaseUserStore";
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 10,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-//   floatingButton: {
-//     backgroundColor: "#fdba74", // #fdba74 is orange300. #c2410c is orange700.
-//     alignItems: "center",
-//     justifyContent: "center",
-//     width: 60,
-//     height: 60,
-//     position: "absolute",
-//     top: 10, // Changed from bottom to top
-//     left: 10, // Changed from right to left
-//     borderRadius: 30,
-//     elevation: 8,
-//   },
-// });
+import {useProtectedRoute} from '../hook/useProtectedRoute';
+import {firebaseUserStore,firebaseUnsubscribed} from "../app/auth/firebaseUserStore";
+
 const styles = StyleSheet.create({
   floatingButton: {
     backgroundColor: "#fdba74",
@@ -60,15 +44,32 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOffset: { width: 1, height: 2 },
     elevation: 3,
+    width:'95%',
     maxHeight:200,
   },
 });
 
 const AccountHome: React.FC = () => {
+  
+  {/* useProtectedRoute(); */}
   const navigation = useNavigation();
   const [visible, setVisible] = useState(true);
   const pan = useRef(new Animated.ValueXY()).current;
 
+  // Using Pullstate's useStoreState hook to subscribe to changes in the store
+  const { isLoggedIn, user } = firebaseUserStore.useState();
+
+  useEffect(() => {
+    // This effect runs when the component mounts. Here, you could perform actions based on the current auth state.
+    console.log("Account Home");
+    console.log("Is logged in:", isLoggedIn);
+    console.log("User sattus:", user); 
+    const unsubscribe = firebaseUnsubscribed;
+    // Cleanup function to unsubscribe from the auth state listener when the component unmounts
+    return () => unsubscribe();
+  }, [isLoggedIn, user]);
+
+  
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
@@ -93,7 +94,7 @@ const AccountHome: React.FC = () => {
   console.log("panResponder:", panResponder);
 
   return (
-    <View style= {{flex:1, minHeight:700}}>
+    <View style= {{flex:1, minHeight:700,width:"95%",}}>
         <Animated.View style={
             {
             transform: [{ translateX: pan.x }, { translateY: pan.y }],
@@ -104,36 +105,25 @@ const AccountHome: React.FC = () => {
             }
           }
           {...panResponder.panHandlers }>
-        <TouchableOpacity style={ styles.floatingButton }>
+          <TouchableOpacity 
+            style={ styles.floatingButton }
+            onPress={firebaseSignOut}
+          >
           <Ionicons name="ios-settings" size = {24} color = "black" />
-        </TouchableOpacity>
+          </TouchableOpacity>
       </Animated.View>
-      <View>
-        <Link href="/Accounts" ><Text style={main_styles.vinText}>Accounts </Text></Link>
-      </View>
-            <TouchableOpacity 
-        style={styles.Button}
-        onPress={async () => {
-          const result = await firebaseSignOut();
-          if (result.error) {
-            // Handle error (e.g., show an alert)
-            Alert.alert('Error', 'Failed to sign out.');
-          } else {
-            // Optionally, navigate to the login screen or update the UI
-          }
-        }}
-      >
-        <Ionicons name="ios-settings" size={24} color="black" />
-      </TouchableOpacity>
 
-      <View style={main_styles.card}>
-        <Text>Card 1 </Text>
+
+      <View style={styles.card}>
+        <Text> User Info </Text>
+        <Text> {user?.email} </Text>
+        <Text> {user?.displayName} </Text>
+        <Text> {user?.phoneNumber} </Text>
       </View>
 
-      <View style={main_styles.card}>
-        <Text>Card 2 </Text>
+
       
-      </View>
+      
     </View>
   );
 };

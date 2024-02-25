@@ -1,47 +1,61 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import firebaseUserStore from "../app/auth/firebaseUserStore";
+import { useStoreState } from "pullstate";
 
-const useFetch = (endpoint, query) => {
+const useFetch = (searchParams, token) => {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState(null);
+  const [url, setUrl] = useState('');
+  useEffect(() => {
+    let endpoint, vin, licensePlate, state;
 
-  const options = {
-    method: "GET",
-    url: `https://jsearch.p.rapidapi.com/${endpoint}`,
-    headers: {
-      "X-RapidAPI-Key": '',
-      "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
-    },
-    params: { ...query },
-  };
-
-  const fetchData = async () => {
-    setIsLoading(true);
-
-    try {
-      const response = await axios.request(options);
-
-      setData(response.data.data);
-      setIsLoading(false);
-    } catch (error) {
-      setError(error);
-      console.log(error)
-    } finally {
-      setIsLoading(false);
+    if ('vin' in searchParams) {
+      endpoint = 'vin_data_aggregated';
+      vin = searchParams.vin;
+    } else if ('licensePlate' in searchParams) {
+      endpoint = 'plate_and_vin_data';
+      licensePlate = searchParams.licensePlate;
+      state = searchParams.state;
     }
-  };
+
+    const validEndpoints = ['vin_data_lite', 'vin_data_aggregated', 'plate_and_vin_data'];
+    if (validEndpoints.includes(endpoint)) {
+      const newUrl = `https://new76prolubeplus.com/apis/${endpoint}/${vin || licensePlate}/${state || ''}/?format=json`;
+      setUrl(newUrl);
+    } else {
+      setError(new Error("Invalid endpoint"));
+    }
+  }, [searchParams]);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (token && url) {
+      const fetchData = async () => {
+        setIsFetching(true);
+        try {
+          const response = await axios.get(url, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setData(response.data);
+        } catch (err) {
+          setError(err);
+          console.log('Error:', err);
+        } finally {
+          setIsFetching(false);
+        }
+      };
+
+      fetchData();
+    }
+  }, [token, url]);
 
   const refetch = () => {
-    setIsLoading(true);
+    setIsFetching(true);
     fetchData();
   };
 
-  return { data, isLoading, error, refetch };
+  return { data, isFetching, error, refetch };
 };
 
 export default useFetch;

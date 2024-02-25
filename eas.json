@@ -2,7 +2,10 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "STRIPE_PUBLIC_TEST_KEY": "pk_test_51O27ZHJQdPkpRk8HuzWAElLfKatvTuF6cfeCloCfB4lumooZcazJhvZKETo4FE7NWxX73E1BqmhFwZH7b2i5RVS900ooTWV626"
+      }
     },
     "preview": {
       "distribution": "internal"

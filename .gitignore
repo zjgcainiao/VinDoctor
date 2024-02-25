@@ -29,6 +29,7 @@ android/*
 .env*.local
 .env.local
 .env
+.env*
 
 # Firebase config.ts file. located in /app/config/
 firebaseConfig.ts
@@ -40,3 +41,10 @@ firebaseConfig.ts
 .env.production.local
 
 .gitignore
+# Expo
+.expo
+dist/
+web-build/
+
+GoogleService-Info.plist
+GoogleService-Info.plist/

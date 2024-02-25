@@ -1,11 +1,12 @@
 import { StripeProvider } from "@stripe/stripe-react-native";
 import PaymentScreen from "./PaymentScreen";
+import Config from 'react-native-config';
 
-const publishableKey = "your_stripe_publishable_key_here";
+const publishableKey = Config.STRIPE_PUBLIC_TEST_KEY;
 
-const App = () => {
+const ProcessPayment = () => {
   return (
-    <StripeProvider publishableKey={publishableKey}>
+    <StripeProvider publishableKey={string:publishableKey} children={null}>
       {/* Rest of your app components */}
       <PaymentScreen />
     </StripeProvider>

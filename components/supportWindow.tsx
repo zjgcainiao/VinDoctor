@@ -20,7 +20,7 @@ const SupportWindow = () => {
       setMessages((prevMessages) => [...prevMessages, message]);
     };
 
-    ws.onerror = (e) => {
+    ws.onerror = (e: WebSocketErrorEvent) => {
       // Handle errors
       console.log(e.message);
     };

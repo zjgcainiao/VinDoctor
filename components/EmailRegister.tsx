@@ -4,28 +4,12 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text,Pressable } from "react-native";
 import main_styles from "../styles/MainTheme.styles";
-import { firebase_auth,firebase_app } from "./sampleFirebaseConfig";
+import {firebaseSignUp} from "../app/auth/firebaseUserStore";
+
 const EmailRegister:React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Function to handle the registration process
-  const handleRegister = () => {
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        // Handle the successful registration (e.g., navigate to the next screen)
-        Alert.alert("Success", "Registration successful!");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // Handle errors here, such as displaying an alert
-        Alert.alert("Error", errorMessage);
-      });
-  };
 
   // Basic validation (can be enhanced as needed)
   const isInputValid = () => {
@@ -33,7 +17,7 @@ const EmailRegister:React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={main_styles.container}>
+    <View style={styles.container}>
       <TextInput
         style={styles.input}
         value={email}
@@ -42,7 +26,7 @@ const EmailRegister:React.FC = () => {
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <TextInput
+      <TextInput  
         style={styles.input}
         value={password}
         onChangeText={setPassword}
@@ -50,35 +34,50 @@ const EmailRegister:React.FC = () => {
         secureTextEntry
       />
       <Pressable
-      onPress={handleRegister}
-      disabled={!isInputValid()}
-      style={({ pressed }) => ({
-        backgroundColor: pressed ? 'lightgray' : 'black',
-        padding: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-      })}
-    >
-      <Text style={{ color: 'white' }}>Register</Text>
-    </Pressable>
-    </SafeAreaView>
+        onPress={firebaseSignUp}
+        disabled={!isInputValid()}
+        style={({ pressed }) => ({
+          backgroundColor: pressed ? 'lightgray' : '#800000', // Dark Maroon
+          padding: 10,
+          justifyContent: 'center',
+          alignItems: 'center',
+        })}
+      >
+        <Text style={{ color: 'white' }}>Register</Text>
+      </Pressable>
+    </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    flex:1  ,
+    display: "block",
+    paddingTop: 20,
+    paddingHorizontal: 10,
+    backgroundColor: 'transparent',
+
+    justifyContent: 'upper',
+    alignItems: 'center',
   },
   input: {
-    width: "80%",
-    padding: 10,
+    width: '100%', // Make input fiel  ds take the full width of the container
+    // Remove maxWidth or adjust it appropriately
+    padding: 5,
+
+    // flexDirection: '',
     marginVertical: 8,
     borderWidth: 1,
     borderColor: "gray",
     borderRadius: 5,
+    margin:10,
+  },
+  backButton: {
+    alignSelf: 'flex-start',
+    position: 'absolute', // Positioning is correct for placing at the top-left corner
+    top: 10,
+    left: 10,
   },
 });
+
 
 export default EmailRegister;

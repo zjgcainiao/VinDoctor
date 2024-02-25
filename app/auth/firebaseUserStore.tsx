@@ -1,55 +1,69 @@
 import { Store, registerInDevtools } from "pullstate";
-import { firebase_auth, firebase_app } from "./firebaseConfig";
-import {
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    signOut,
-    updateProfile,
-    User,
-    updateCurrentUser,
-    updateEmail,
-    updatePassword,
-    updatePhoneNumber
-
-} from "firebase/auth";
+import auth from '@react-native-firebase/auth';
 
 interface storeInterface {
     // isDarkMode: boolean;
     isLoggedIn: boolean;
     isInitialized: boolean;
     user: User | null;
+    token: string | null;
+    uid: string | null;  
 };
-//initated via firebaseConfig.ts in config folder
-const auth = firebase_auth;
+
+
 
 const firebaseUserStore = new Store<storeInterface>({
     // isDarkMode: true,
     isLoggedIn: false,
     isInitialized: false,
     user: null,
+    token: null,
+    uid: null,
 });
 
-const firebaseUnsubscribed = onAuthStateChanged(auth, (user) => {
-    console.log("onAuthStateChanged", user);
+const firebaseUnsubscribed = auth().onAuthStateChanged((user) => {
+    console.log("User status changed: ", user);
+    // const user = auth().currentUser;
+    const token = user?.getIdToken();
     firebaseUserStore.update((store: storeInterface) => {
         store.isInitialized = true;
         store.isLoggedIn = user ? true : false;  // if user is null, then false, else true
         store.user = user;
+        store.token = token;
+        store.uid = user?.uid;
         // store.isDarkMode = true;
     });
 });
 
+const firebasePhoneSignIn = async (phoneNumber: string) => {
+
+    try {
+        const confirmationResult = await auth().signInWithPhoneNumber(phoneNumber);
+        return { confirmationResult: confirmationResult, error: null };
+    } catch (error) {
+        console.log("signIn error", error);
+        Alert.alert("Error", "Phone sign-in failed.");
+        return { confirmationResult: null, error: error };
+    }
+}
 
 const firebaseSignIn = async (email: string, password: string) => {
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        // signInWithEmailAndPassword is directly called on the auth() returned object.
+        const userCredential = auth().signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
-        console.log("signIn", user);
+        const token = user ? user.getIdToken() : null;
+        const uid = user ? user.uid : null;
+        console.log("signIn firebase User:", user,'token:', token);
         firebaseUserStore.update((store: storeInterface) => {
+            store.isInitialized = user ? true : false;
             store.isLoggedIn = user ? true : false;
             store.user = user;
+            store.token = token;
+            store.uid = uid;
+            
         });
+
         return { user: auth.currentUser, error: null };
     } catch (error) {
         console.log("signIn error", error);
@@ -60,15 +74,18 @@ const firebaseSignIn = async (email: string, password: string) => {
 const firebaseSignUp = async (email: string, password: string, displayName: string) => {
     try {
         // this will trigger onAuthStateChange to update the store.
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await auth().createUserWithEmailAndPassword( email, password);
         const user = userCredential.user;
         // add the displayName
         await updateProfile(user, { displayName: displayName });
 
         console.log("signUp new user ", user);
         firebaseUserStore.update((store: storeInterface) => {
+            store.isInitialized = user ? true : false;
             store.isLoggedIn = true;
-            store.user = user
+            store.user = user;
+            store.token = user.getIdToken();
+            store.uid = user.uid;
 
         });
         return { user: auth.currentUser, error: null };
@@ -76,15 +93,17 @@ const firebaseSignUp = async (email: string, password: string, displayName: stri
         console.log("signUp error", error);
         return { user: null, error: error }
     }
-};
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ;
 
 const firebaseSignOut = async () => {
     try {
-        await signOut(auth);
+        await auth().signOut();
         console.log("signOut");
         firebaseUserStore.update((store: storeInterface) => {
             store.isLoggedIn = false;
             store.user = null;
+            store.token = null;
+            store.uid = null;
         });
         return { user: null, error: null };
     } catch (error) {
@@ -92,6 +111,6 @@ const firebaseSignOut = async () => {
         return { user: null, error: error };
     }
 };
-registerInDevtools({ firebaseUserStore });
+// registerInDevtools({ firebaseUserStore });
 
-export { firebaseUserStore, firebaseSignIn, firebaseSignUp, firebaseSignOut, firebaseUnsubscribed };
+export { firebaseUserStore, firebaseSignIn, firebaseSignUp, firebaseSignOut, firebaseUnsubscribed, firebasePhoneSignIn};
