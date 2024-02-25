@@ -47,7 +47,7 @@ firebaseConfig.ts
 
 
 # build folder
-# ios/
+ios/
 
 android/
 android/*
