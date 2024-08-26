@@ -37,6 +37,7 @@ web-build/
 .env.production.local
 
 .gitignore
+
 # Expo
 .expo
 dist/
@@ -47,7 +48,7 @@ firebaseConfig.ts
 
 
 # build folder
-ios/
+# ios/
 
 android/
 android/*

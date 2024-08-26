@@ -1,18 +1,40 @@
 import { Store, registerInDevtools } from "pullstate";
 import auth from '@react-native-firebase/auth';
+import {useEffect} from 'react';
+import { useRouter } from 'expo-router';
+import { router } from "expo-router";
+// import router from '../../../smart_home_hub/frontend/smart_home_hub_vue/src/router/index';
+import User  from '@react-native-firebase/auth';
+import { Alert } from "react-native";
 
-interface storeInterface {
+// export interface UserMetadata {
+//     // Define the properties of UserMetadata
+//     creationTime: string|null;
+//     lastSignInTime: string|null;
+//   }
+  
+  export interface FirebaseUser {
+    uid: string;
+    displayName: string|null;
+    email: string|null;
+    emailVerified: boolean;
+    photoURL: string|null;
+    phoneNumber: string|null;
+    isAnonymous: boolean;
+    providerId: string|null;
+    // metadata: UserMetadata|null;
+  }
+  
+  export interface storeInterface {
     // isDarkMode: boolean;
     isLoggedIn: boolean;
     isInitialized: boolean;
-    user: User | null;
+    user: FirebaseUser| null;
     token: string | null;
     uid: string | null;  
-};
-
-
-
-const firebaseUserStore = new Store<storeInterface>({
+  };
+  
+export const firebaseUserStore = new Store<storeInterface>({
     // isDarkMode: true,
     isLoggedIn: false,
     isInitialized: false,
@@ -21,7 +43,7 @@ const firebaseUserStore = new Store<storeInterface>({
     uid: null,
 });
 
-const firebaseUnsubscribed = auth().onAuthStateChanged((user) => {
+export const firebaseUnsubscribed = auth().onAuthStateChanged((user) => {
     console.log("User status changed: ", user);
     // const user = auth().currentUser;
     const token = user?.getIdToken();
@@ -47,13 +69,13 @@ const firebasePhoneSignIn = async (phoneNumber: string) => {
     }
 };
 
-const firebaseSignIn = async (email: string, password: string) => {
+export const firebaseSignIn = async (email: string, password: string) => {
     try {
         // signInWithEmailAndPassword is directly called on the auth() returned object.
        auth().signInWithEmailAndPassword(email, password)
        .then(()=>{
             console.log('Sign-in successful');
-            user = auth().currentUser;
+            const user = auth().currentUser;
             const token = user ? user.getIdToken() : null;
             const uid = user ? user.uid : null;
             console.log("signIn firebase User:", user,'token:', token);
@@ -61,7 +83,16 @@ const firebaseSignIn = async (email: string, password: string) => {
             firebaseUserStore.update((store: storeInterface) => {
                 store.isInitialized = user ? true : false;
                 store.isLoggedIn = user ? true : false;
-                store.user = user;
+                store.user = user ? {
+                    uid: user.uid,
+                    displayName: user.displayName ?? null,
+                    email: user.email ?? null,
+                    emailVerified: user.emailVerified,
+                    photoURL: user.photoURL ?? null,
+                    phoneNumber: user.phoneNumber ?? null,
+                    isAnonymous: user.isAnonymous,
+                    providerId: user.providerId ?? null,
+                  } : null;
                 store.token = token;
                 store.uid = uid;
               });
@@ -86,22 +117,33 @@ const firebaseSignIn = async (email: string, password: string) => {
     };
 };
 
-const firebaseSignUp = async (email: string, password: string, displayName: string) => {
+export const firebaseSignUp = async (email: string, password: string, displayName: string) => {
     try {
         // this will trigger onAuthStateChange to update the store.
-        const userCredential = await auth().createUserWithEmailAndPassword( email, password);
-        const user = userCredential.user;
-        // add the displayName
-        await updateProfile(user, { displayName: displayName });
+        auth().createUserWithEmailAndPassword(email, password)
+        .then(()=>{
+        console.log('Sign-up successful');
+        const user = auth().currentUser;
+        const token = user ? user.getIdToken() : null;
+        const uid = user ? user.uid : null;
+        console.log("New firebase User:", user,'token:', token);
 
-        console.log("signUp new user ", user);
+        console.log("signUp A new user ", user);
         firebaseUserStore.update((store: storeInterface) => {
             store.isInitialized = user ? true : false;
             store.isLoggedIn = true;
             store.user = user;
             store.token = user.getIdToken();
             store.uid = user.uid;
+        });
+        })
+        .catch(error=>{
 
+            if (error.code === 'auth/invalid-email') {
+                console.log('That email address is invalid!');
+            } else {
+                console.log('Error:', error.message);
+            }
         });
         return { user: auth.currentUser, error: null };
     } catch (error) {
@@ -110,16 +152,19 @@ const firebaseSignUp = async (email: string, password: string, displayName: stri
     }
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ;
 
-const firebaseSignOut = async () => {
+export const firebaseSignOut = async () => {
+    const router = useRouter();
     try {
-        await auth().signOut();
+        auth().signOut().then(()=>{
         console.log("signOut");
         firebaseUserStore.update((store: storeInterface) => {
             store.isLoggedIn = false;
             store.user = null;
             store.token = null;
             store.uid = null;
+            });
         });
+        router.push("/");
         return { user: null, error: null };
     } catch (error) {
         console.log("signOut error", error);
@@ -128,4 +173,3 @@ const firebaseSignOut = async () => {
 };
 // registerInDevtools({ firebaseUserStore });
 
-export { firebaseUserStore, firebaseSignIn, firebaseSignUp, firebaseSignOut, firebaseUnsubscribed, firebasePhoneSignIn};

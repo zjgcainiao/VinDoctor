@@ -14,7 +14,6 @@ import { Link,useRouter, } from 'expo-router';
 
 import {
   useRootNavigationState,
-  useRootNavigation,
   useSegments,
   useNavigation,
 } from "expo-router";
@@ -28,12 +27,13 @@ import LogoTitle from "../components/LogoTitle";
 import  {LinearGradient } from "expo-linear-gradient";
 import { firebaseUserStore } from "./auth/firebaseUserStore";
 import { useStoreState } from "pullstate";
-import { onAuthStateChanged,getAuth } from "firebase/auth";
-import { homepageRichTextContent } from '../../new_76prolubeplus.com/frontend/dashboard_react/src/components/Constants';
+// import { onAuthStateChanged,getAuth } from "firebase/auth";
+import auth from "@react-native-firebase/auth";
+// import { homepageRichTextContent } from '../constants';
 import { initializeSearchCounter } from '../components/saveSecureStore';
 
 const IndexPage: React.FC = () => {
-  // const router = useRouter();
+  const router = useRouter();
   //let store = useStoreState(firebaseUserStore);
   const segments = useSegments();
   const navigationState = useRootNavigationState();
@@ -47,7 +47,7 @@ const IndexPage: React.FC = () => {
 
   return (
     <LinearGradient
-        colors={["#97989a", "#d1d3d5", "#555d61"]} //"#97989a" - color of the top, "#d1d3d5" - color of the bottom
+        colors={["#97989a", "#d1d3d5", "#555d61"]} //"#97989a" - color of the top, "#555d61" - color of the bottom
         start={{ x: 0.0, y: 0.0 }}
         end={{ x: 1.0, y: 1.0 }}
         style={main_styles.container}
@@ -62,6 +62,7 @@ const IndexPage: React.FC = () => {
             <Text style={main_styles.buttonText}>Register</Text>
           </TouchableOpacity>
 
+
           <TouchableOpacity
             style={main_styles.button}
             onPress={() => navigation.navigate('SignInScreen')}>
@@ -69,7 +70,7 @@ const IndexPage: React.FC = () => {
           </TouchableOpacity>
   
           <Link href="/VehicleReport" style={main_styles.mutedButton}>
-            <Text>Try It out</Text>
+            <Text >Try It out</Text>
           </Link>
 
         {/* isLoggedIn */}

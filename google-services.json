@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "558945667327",
+    "project_id": "vin-doctor",
+    "storage_bucket": "vin-doctor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558945667327:android:de79aaac4ded86f81ca4ca",
+        "android_client_info": {
+          "package_name": "com.holleratme420.VinDoctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "558945667327-1dmbvifgipgtv7bhvid6eu7t6rs0eqr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvUgQu8XYz3Z7XesV4eZZ83EecBwAwr5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "558945667327-1dmbvifgipgtv7bhvid6eu7t6rs0eqr0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "558945667327-29i6771ekpfec2kp40mf1dmrd8pc9ckp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.holleratme420.vin-doctor"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

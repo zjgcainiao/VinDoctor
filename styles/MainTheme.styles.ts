@@ -4,22 +4,22 @@ import { StyleSheet } from 'react-native';
 
 const main_styles = StyleSheet.create({
 
-      tabsContainerStyle: {
-    borderColor: 'black',
-  },
-  tabStyle: {
-    borderColor: 'black',
-    backgroundColor: 'white',
-  },
-  activeTabStyle: {
-    backgroundColor: 'black',
-  },
-  tabTextStyle: {
-    color: 'black',
-  },
-  activeTabTextStyle: {
-    color: 'white',
-  },
+    tabsContainerStyle: {
+        borderColor: 'black',
+    },
+    tabStyle: {
+        borderColor: 'black',
+        backgroundColor: 'white',
+    },
+    activeTabStyle: {
+        backgroundColor: 'black',
+    },
+    tabTextStyle: {
+        color: 'black',
+    },
+    activeTabTextStyle: {
+        color: 'white',
+    },
     box: {
         flex:1,
         justifyContent: "center",
@@ -76,12 +76,12 @@ const main_styles = StyleSheet.create({
     },
 
     input: {
-        flex:1,
-        flexDirection: "column",   
-        borderColor: '#888', //#888 is gr   ay
+        // flex:1,
+        // flexDirection: "column",   
+        borderColor: '#888', //#888 is gray
         padding: 10,
         borderWidth: 2,
-        marginVertical: 8,
+        marginVertical: 5,
         borderRadius: 5,
         paddingHorizontal: 20,
         backgroundColor: "#fff", // white background
@@ -206,7 +206,7 @@ const main_styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 15,
-        fontFamily: "Exo2-Semibold",
+        fontFamily: "Exo2-SemiBoldItalic",
     },
     mutedButtonText: {
         color: "#78716c", // #78716c warmgray400

@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { firebaseUserStore } from "../app/auth/firebaseUserStore";
 import { firebaseSignIn,firebaseSignOut,firebaseSignUp,firebaseUnsubscribed,firebasePhoneSignIn } from "../app/auth/firebaseUserStore";
 import { useRouter,useNavigation } from "expo-router";  
+import { isValidUSPhoneNumber } from '../utils/isValidUSPhoneNumber';
 
 
 const renderTabContentForSignIn = (selectedIndex: number) => {
@@ -17,14 +18,14 @@ const renderTabContentForSignIn = (selectedIndex: number) => {
   // const [confirmationResult, setConfirmationResult] = useState(null);
   const [confirm, setConfirm] = useState(null);
   const [code, setCode] = useState("");
-  const formStyles = selectedIndex === 0 ? styles.emailForm : styles.phoneForm;
+
   const { isLoggedIn, user } = firebaseUserStore.useState();
   // Helper function to validate email format
   const isValidEmail = (email: string) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
-
+  const formStyles = selectedIndex === 0 ? styles.emailForm : styles.phoneForm;
   // return the formatted phone number in E.164 format when it's valid, or null (or some other indicative value) when it's not.
   const isValidPhone = (phone: string) => {
     // Remove non-digit characters
@@ -81,11 +82,10 @@ const renderTabContentForSignIn = (selectedIndex: number) => {
     
     try {
       // Ensure firebasePhoneSignIn is an async function and await its result
-      
-      const confirmationResult = await auth().signInWithPhoneNumber(formattedPhoneNumber);
+      const confirmation = await auth().signInWithPhoneNumber(formattedPhoneNumber);
       console.log("Sign-in verification sent, navigating to confirmation screen...");
-      if (confirmationResult ) {
-        setConfirm(confirmationResult);
+      if (confirmation ) {
+        setConfirm(confirmation);
       } else {
         // Handle error or invalid confirmation result...
         Alert.alert("Error", "Could not get confirmation result.");
@@ -146,7 +146,7 @@ const renderTabContentForSignIn = (selectedIndex: number) => {
             <>
               <TextInput
                 value={code}
-                onChangeText={setCode}
+                onChangeText={text=>setCode(text)}
                 // Additional TextInput props...
               />
               <Button title="Confirm Code" onPress={confirmCode} />
@@ -180,6 +180,8 @@ const styles = StyleSheet.create({
     flex:2,
     width: "90%",
     padding: 10,  
+    //border color to black 
+    borderColor: "black",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,

@@ -25,69 +25,9 @@ import {firebaseUserStore} from './auth/firebaseUserStore';
 import SafetyRatings from '../components/SafetyRatingSection';
 import RepairHistory from '../components/RepairHistorySection';
 import RecallInfo from '../components/RecallInfoSection';
+import LicensePlateSection from '../components/LicensePlateSection';
 import * as SecureStore from 'expo-secure-store';
 import { getAccessToken,fetchAndStoreAnonymousToken  } from '../components/saveSecureStore';
-// const CustomLinearGradient: React.FC<CustomLinearGradientProps> = ({
-//   borderRadius,
-//   ...props
-// }) => {
-//   return <LinearGradient {...props} />;
-// };
-
-// styles in the stylesheet
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'upper',
-    marginTop: 20,
-  },
-  tabs: {
-    flexDirection: 'row',
-    marginBottom: 30,
-  },
-  tab: {
-    padding: 10,
-    marginHorizontal: 5,
-    borderBottomWidth: 2,
-    borderBottomColor: '#BCC6CC', // Metallic color for tab indicator
-
-  },
-  activeTab: {
-    backgroundColor: '#fdba74', //#fdba74-orange300
-
-  },
-
-  tabText: {
-    color: '#606060', // Dark grey for contrast
-    fontFamily: 'Exo2-ExtraBold',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#BCC6CC', // Metallic border color
-    borderRadius: 5,
-    padding: 10,
-    marginVertical: 5,
-    width: '90%',
-    fontFamily: 'Exo2-Regular',
-    backgroundColor: '#F0F0F0', // Light background to simulate metal
-  },
-  buttonGradient: {
-    borderRadius: 20,
-    marginTop: 10,
-  },
-  button: {
-    padding: 10,
-    alignItems: 'center',
-    width: 200,
-    backgroundColor: '#555d61', // A color from your provided gradient that suggests a "darker" look
-  },
-  buttonText: {
-    color: '#FFF',
-    fontWeight: 'bold',
-    fontFamily: 'Exo2-ExtraBold',
-  },
-});
 
 interface CustomLinearGradientProps extends LinearGradient {
   borderRadius: string;
@@ -109,14 +49,26 @@ const VehicleReport: React.FC = () => {
   const [searchParams, setSearchParams] = useState({});
   const [data, setData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [error, setError] = useState(null);
   const [url, setUrl] = useState('');
 
-  const { isLoggedIn, isInitialized, user, token, id } = firebaseUserStore.useState();
+  const { isLoggedIn, user, token } = firebaseUserStore.useState();
   const [viewMoreSafetyRatings, setViewMoreSafetyRatings] = useState(false);
   const [viewMoreRecallInfo, setViewMoreRecallInfo] = useState(false);
+  const [viewMoreLicensePlateSection, setViewMoreLicensePlateSection] = useState(false);
   const [keyValue, setKeyValue] = useState(0); // Initial key value
   
+  useEffect(() => {
+      if (process.env.NODE_ENV === 'development') {
+          setUrl('http://127.0.0.1:8000/apis/handle_react_native_vehicle_search_api_view/?format=json');
+      } else {
+          setUrl('https://new76prolubeplus.com/apis/handle_react_native_vehicle_search_api_view/?format=json');
+      }
+  }, []);
+
+  const toggleLicensePlateSection = () => {
+    setViewMoreLicensePlateSection(!viewMoreLicensePlateSection);
+    setKeyValue(prevKey => prevKey + 1); // Increment key value to trigger re-render
+  }
 
 
   const toggleViewMoreSafetyRatings = () => {
@@ -127,56 +79,6 @@ const VehicleReport: React.FC = () => {
   const toggleViewMoreRecallInfo = () => {
     setViewMoreRecallInfo(!viewMoreRecallInfo);
     setKeyValue(prevKey => prevKey + 1); // Increment key value to trigger re-render
-  };
-
-  
-  // New function to construct the URL and initiate fetching
-  const constructUrlAndFetch = () => {
-    let endpoint='';
-    let queryParams = '';
-
-    if ('vin' in searchParams && searchParams.vin) {
-        endpoint = 'vin_data_aggregated';
-        // Construct query parameters for VIN
-        queryParams = `search_by_vin/?format=json&vin=${searchParams.vin}`;
-    } else if ('licensePlate' in searchParams && searchParams.licensePlate) {
-        endpoint = 'plate_and_vin_data';
-        // Construct query parameters for license plate and optionally state
-        queryParams = `?format=json&licensePlate=${searchParams.licensePlate}${searchParams.state ? `&state=${searchParams.state}` : ''}`;
-    }
-
-    const validEndpoints = ['vin_data_lite', 'vin_data_aggregated', 'plate_and_vin_data'];
-
-    if (validEndpoints.includes(endpoint)) {
-        // Here, queryParams is already prefixed with ?, so we directly concatenate
-        const newUrl = `https://new76prolubeplus.com/apis/${endpoint}/${queryParams}`;
-        setUrl(newUrl);
-    } else {
-        setError(new Error("Invalid endpoint"));
-    }
-  };
-
-  const fetchData = async () => {
-    if (!token || !url) return; // Ensure token and url are available
-    console.log('fetchData url:', url, 'token:', token);
-    setIsFetching(true);
-    try {
-      const response = await axios.get(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = response.data;
-      setData(data);
-      if (data) {
-        setSearchResult(data); // Assuming you have a setSearchResult state setter
-      } else {
-        setErrorMessage('No results found. Please try again with different search criteria.');
-      }
-    } catch (err) {
-      setError(err);
-      console.log('Error:', err, 'url:', url, 'token:', token);
-    } finally {
-      setIsFetching(false);
-    }
   };
   
   // this handleSearch can be divided into constructUrlAndFetch and fetchData() in the next phase.
@@ -217,37 +119,28 @@ const VehicleReport: React.FC = () => {
         setSearchParams(searchParams);
       }
       
-      let endpoint='';
-      let queryParams = '';
-
+      let postData = {};
+      // C for Vin search
       if ('vin' in searchParams && searchParams.vin) {
-          endpoint = 'vin_data_aggregated';
-          // Construct query parameters for VIN
-          queryParams = `search_by_vin/?format=json&vin=${searchParams.vin}`;
+          
+          postData = { vin: searchParams.vin,
+              ...(searchParams.modelYear && { modelYear: searchParams.modelYear })
+          };
+          // Construct query parameters for license plate search
       } else if ('licensePlate' in searchParams && searchParams.licensePlate) {
-          endpoint = 'plate_and_vin_data';
-          // Construct query parameters for license plate and optionally state
-          queryParams = `?format=json&licensePlate=${searchParams.licensePlate}${searchParams.state ? `&state=${searchParams.state}` : ''}`;
+          postData = {
+              licensePlate: searchParams.licensePlate,
+              ...(searchParams.state && { state: searchParams.state }) // Conditionally add state if it exists
+          };
       }
-
-      const validEndpoints = ['vin_data_lite', 'vin_data_aggregated', 'plate_and_vin_data'];
-
-      if (validEndpoints.includes(endpoint)) {
-          // Here, queryParams is already prefixed with ?, so we directly concatenate
-          const newUrl = `https://new76prolubeplus.com/apis/${endpoint}/${queryParams}`;
-          setUrl(newUrl);
-      } else {
-          setError(new Error("Invalid endpoint"));
-      }
-      setIsLoading(false);
-
-
+      console.log('data submitted from react native:', postData);
+      console.log('user is logged in:', isLoggedIn,'user is:', user, 'token:', token, 'token_type', token_type);
       //use ananoymousSearchCount
       // Assuming `token` determines if a user is signed in or not
       if (!token || !isLoggedIn) { // User is anonymous. count of 3
         await fetchAndStoreAnonymousToken();
         let searchCount = await SecureStore.getItemAsync('anonymousSearchCount');
-        
+        // searchCount=10; for testing or debugging
         console.log('customer is not logged in, searchCount:', searchCount);
         
         token_jwt = await getAccessToken();
@@ -262,34 +155,51 @@ const VehicleReport: React.FC = () => {
           // Continue with the search
         }
       }
+
       // Perform the search (this includes the code you've provided for fetching data)
       setIsLoading(false);
+
       if (!url) return; // Ensure URL is available
       console.log('url:', url, 'token:', token, 'user is anonymous:', !isLoggedIn); 
       setIsFetching(true);
       
       let final_token_submitted;
+      let token_type;
       if (token) {
         final_token_submitted = token;
+        token_type = 'firebase';
       } else {
         final_token_submitted = token_jwt;
+        token_type = 'simplejwt';
       }
-      console.log('final_token_submitted:', final_token_submitted);
+      // submit to the django backend 
       try {
-        const response = await axios.get(url, {
-          headers: { Authorization: `Bearer ${final_token_submitted}` },
-        });
-        const data = response.data;
-        
-        if (data) {
-          setData(data);
-          setSearchResult(data); // Assuming you have a setSearchResult state setter
-        } else {
-          setErrorMessage('No results found. Please try again with different search criteria.');
-        }
+          const response = await axios.post(url, postData, {
+              headers: {
+                  Authorization: `Bearer ${final_token_submitted}`,
+                  'Content-Type': 'application/json', // Specify the content type
+                  'Token-Type': token_type,
+              },
+          });
+
+          const data = response.data;
+          
+
+          // if (token_type === 'simplejwt' && data && data.length > 0) {
+          //   data = data[0];
+          // }
+
+          console.log('submitted token type',token_type,'returned data from django server', data);
+          if (data) {
+              setData(data);
+              setSearchResult(data);
+          } else {
+              setErrorMessage('No results found. Please try again with different search criteria.');
+          }
       } catch (err) {
-        setError(err);
-        console.log('Error:', err, 'url:', url, 'token:', token);
+        setErrorMessage(err.message || 'An error occurred' );
+        console.log('Error:', err, 'url:', url, 'token_submitted:', final_token_submitted);
+
       } finally {
         setIsFetching(false);
       }
@@ -298,7 +208,7 @@ const VehicleReport: React.FC = () => {
       // Handle the error in a way that is appropriate for your application
       console.error(error);
       // Optionally set an error state here
-      // setError(error);
+      // setErrorMessage(error);
       setErrorMessage('An error occurred while searching');
     } finally {
       setIsLoading(false);
@@ -410,7 +320,7 @@ const VehicleReport: React.FC = () => {
         )}
 
         <LinearGradient
-          colors={['#BCC6CC', '#EAEAEA']} // Metallic gradient colors
+          colors={['#BCC6CC', '#EAEAEA']} // #BCC6CC, #EAEAEA - Metallic gradient
           style={styles.buttonGradient}
         >
           <Pressable style={styles.button} onPress={handleSearch}>
@@ -420,7 +330,16 @@ const VehicleReport: React.FC = () => {
 
         {isLoading && <Text>Loading...</Text>}
         {errorMessage && <Text>{errorMessage}</Text>}
-        {data && (
+        {data && activeTab==='licenseSearch' && (
+          <>
+            <LicensePlateSection
+              licensePlateAndVinData={data}
+              viewMore={viewMoreLicensePlateSection}
+              onViewMoreToggle={toggleLicensePlateSection}
+            />
+          </>
+        )}
+        {data && activeTab === "vinSearch" && (
           <>
             {data.safety_ratings && 
               <SafetyRatings
@@ -444,6 +363,61 @@ const VehicleReport: React.FC = () => {
 
 };
 
+
+// styles in the stylesheet
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'upper',
+    marginTop: 20,
+  },
+  tabs: {
+    flexDirection: 'row',
+    marginBottom: 30,
+  },
+  tab: {
+    padding: 10,
+    marginHorizontal: 5,
+    borderBottomWidth: 2,
+    borderBottomColor: '#BCC6CC', // Metallic color for tab indicator
+
+  },
+  activeTab: {
+    backgroundColor: '#fdba74', //#fdba74-orange300
+
+  },
+
+  tabText: {
+    color: '#606060', // Dark grey for contrast
+    fontFamily: 'Exo2-ExtraBold',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#BCC6CC', // Metallic border color
+    borderRadius: 5,
+    padding: 10,
+    marginVertical: 5,
+    width: '90%',
+    fontFamily: 'Exo2-Regular',
+    backgroundColor: '#F0F0F0', // Light background to simulate metal
+  },
+  buttonGradient: {
+    borderRadius: 20,
+    marginTop: 10,
+  },
+  button: {
+    padding: 10,
+    alignItems: 'center',
+    width: 200,
+    backgroundColor: '#555d61', // A color from your provided gradient that suggests a "darker" look
+  },
+  buttonText: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontFamily: 'Exo2-ExtraBold',
+  },
+});
 
 export default VehicleReport;
 

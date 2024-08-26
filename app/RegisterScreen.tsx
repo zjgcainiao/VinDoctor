@@ -40,7 +40,7 @@ const RegisterScreen: React.FC = () => {
       }),
       Animated.timing(formOpacity, {
         toValue: 1, // Gradually show the form
-        duration: 500,
+        duration: 300,
         useNativeDriver: true,
       }),
     ]).start();
@@ -60,7 +60,7 @@ const RegisterScreen: React.FC = () => {
   return (
     
       <View style={main_styles.container}>
-      <Animated.View style={[styles.logo, { transform: [{ scale: logoAnim }] }]}>
+      <Animated.View style={[main_styles.logo, { transform: [{ scale: logoAnim }] }]}>
         <LogoTitle />
       </Animated.View>
         <TouchableOpacity
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
 
   tabContainer: {
-    alignitems:'stretch',
+    alignItems:'stretch',
     backgroundColor: 'transparent', // For the SegmentedControlTab to inherit the LinearGradient
     marginBottom: 20, // Adjust the space between the tabs and the content below
     color: 'black', // Change the color to black

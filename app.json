@@ -20,6 +20,7 @@
       "assets/fonts/*",
       "assets/icons/*"
     ],
+    "sdkVersion": "51.0.0",
     "plugins": [
       [
         "expo-build-properties",
@@ -41,13 +42,15 @@
       ],
       "expo-router",
       "@react-native-google-signin/google-signin",
-      "sentry-expo",
       "expo-apple-authentication"
     ],
     "name": "VinDoctor",
     "slug": "vin-doctor",
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
     "owner": "holleratme420",
-    "description": "your AI-powered,online doctor for your vehicles, providng detailed, updated technical and safety information, vehicle history info; help you make machine learning based estimates and search parts inforamtion. ",
+    "description": "your mobile station for your vehicles, providng detailed, updated technical and safety information, vehicle history info; help you make machine learning based estimates and search parts inforamtion. ",
     "extra": {
       "router": {
         "origin": false
@@ -58,8 +61,18 @@
     },
     "ios": {
       "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "com.holleratme420.vin-doctor"
+      "bundleIdentifier": "com.holleratme420.vin-doctor",
+      "icon": "./assets/icon.png",
+      "infoPlist": {
+        "CFBundleIconName": "VinDoctorIcon"
+      }
     },
-    "android": {}
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "package": "com.holleratme420.VinDoctor",
+      "icon": "./assets/icon.png"
+      
+    }
+    
   }
 }

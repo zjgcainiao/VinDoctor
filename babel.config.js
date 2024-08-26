@@ -9,7 +9,6 @@ module.exports = function (api) {
       "@babel/plugin-proposal-export-namespace-from",
       "react-native-reanimated/plugin",
     // "@gluestack-style/babel-plugin-styled-resolver",
-      require.resolve("expo-router/babel"),
     ],
   };
 };

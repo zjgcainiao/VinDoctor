@@ -2,9 +2,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { Stack } from 'expo-router/stack';
 import { Text } from 'react-native';
-import { useFonts,loadAsync } from 'expo-font';
+import { useFonts, loadAsync } from 'expo-font';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import EmailRegister from '../components/EmailRegister'; 
 import { SafeAreaView, useEffect } from 'react-native';
 import {
   DarkTheme,
@@ -12,7 +11,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function Layout() {
   const fontsLoaded = useFonts({
@@ -36,7 +35,7 @@ export default function Layout() {
     'Orbitron-Bold': require('../assets/fonts/Orbitron-Bold.ttf'),
     'Orbitron-ExtraBold': require('../assets/fonts/Orbitron-ExtraBold.ttf'),
     'Orbitron-Black': require('../assets/fonts/Orbitron-Black.ttf'),
-   
+
     'NotoSansMono-Regular': require('../assets/fonts/NotoSansMono-Regular.ttf'),
     'NotoSansMono-Light': require('../assets/fonts/NotoSansMono-Light.ttf'),
     'NotoSansMono-Thin': require('../assets/fonts/NotoSansMono-Thin.ttf'),
@@ -56,22 +55,24 @@ export default function Layout() {
   });
 
   if (!fontsLoaded) {
-    return <Text >Loading customzied fonts...</Text>;
+    return (<Text> Loading Customized fonts...</Text>);
   };
 
 
   return (
     <SafeAreaProvider >
-      <Stack
-        screenOptions={{
-          headerShown: true,
-          headerTintColor: '#c2410c', // #c2410c-orange700. #9a3412-orange800
-          headerTitleStyle: {
-            fontFamily: 'Exo2-Bold',
-            // fontWeight:700,
-          },
-        }}
-      />
+        <Stack
+          screenOptions={{
+            headerShown: true,
+            headerTintColor: '#9a3412', // #c2410c-orange700. #9a3412-orange800
+            headerTitleStyle: {
+              fontFamily: 'Exo2-Bold',
+              // fontWeight:700,
+            }
+          }}
+        />
+      
+
     </SafeAreaProvider>
 
 

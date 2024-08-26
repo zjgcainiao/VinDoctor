@@ -1,7 +1,24 @@
 import * as SecureStore from 'expo-secure-store';
+import icons from '../constants/icons';
+import React, { useState, useEffect } from "react";
+const SEARCH_LIMIT = 3;
 // the follwoing three token functions work together
 export const fetchAndStoreAnonymousToken = async () => {
-    const response = await fetch('http://127.0.0.1:8000/apis/get_anonymous_token/?format=json');
+    let url='';
+
+    if (process.env.NODE_ENV === 'development') {
+        url = 'http://127.0.0.1:8000/apis/get_anonymous_token/?format=json';
+    } else {
+        url = 'https://new76prolubeplus.com/apis/get_anonymous_token/?format=json';
+    }
+
+    // acccess = await SecureStore.getItemAsync('jwtAccessToken');
+    // refresh = await SecureStore.getItemAsync('jwtRefreshToken');
+    // if (acccess && refresh) {
+    //     return;
+    // }
+
+    const response = await fetch(url);
     const data = await response.json();
     console.log('data that fetched from anonymous token source:', data);
     await SecureStore.setItemAsync('jwtAccessToken', data.access);
@@ -65,10 +82,10 @@ export const saveLicensePlateSearchCount = async (count) => {
 export const getLicensePlateSearchCount = async ()=> {
   let result = await SecureStore.getItemAsync('license_plate_search_count');
   if (result) {
-    return parseInt(result, 10);
+    return parseInt(result, 5);
   } else {
     // Default value if not yet set
-    return 2;
+    return 1;
   }
 };
 

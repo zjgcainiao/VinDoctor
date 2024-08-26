@@ -1,12 +1,13 @@
 import React,{useContext, useEffect, useState} from 'react';
 import { useStorageState } from './useStorageStates';
-import { useSegments,useRootNavigation,useRouter } from 'expo-router';
+import { useSegments,useRouter, useRootNavigationState } from 'expo-router';
 import {useAuthStatus} from '../../hook/useAuthStatus';
 import {firebaseSignIn, firebaseSignUp, firebaseSignOut, firebasePhoneSignIn } from './firebaseUserStore';
-import { User } from 'firebase/auth';
+// import User  from '@react-native-firebase/auth';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 // define a singInResponse interface
 interface signInResponse {
-    user: User | null;
+    user: FirebaseAuthTypes.User  | null;
     error: string | null;
 }
 
@@ -20,7 +21,7 @@ interface signOutResponse {
 interface AuthContextProps {
     signIn: (email: string, password: string) => Promise<signInResponse>;
     signOut: () => Promise<signOutResponse>;
-    user: User | null;
+    user: FirebaseAuthTypes.User | null;
     authInitialized: boolean | null;
 }
 
@@ -58,7 +59,6 @@ export const AuthContextProvider:React.FC<{children: React.ReactNode}> = ({child
   //create a hook named "useProtectedRoute" that will redirect the user to the login screen if they are not logged in
   const router = useRouter();
   const [isNavigationReady, setIsNavigationReady] = React.useState(false);
-  const rootNavigation = useRootNavigation();
 
   return (
     <AuthContext.Provider
