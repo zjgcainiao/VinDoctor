@@ -35,7 +35,6 @@ export default function Layout() {
     'Orbitron-Bold': require('../assets/fonts/Orbitron-Bold.ttf'),
     'Orbitron-ExtraBold': require('../assets/fonts/Orbitron-ExtraBold.ttf'),
     'Orbitron-Black': require('../assets/fonts/Orbitron-Black.ttf'),
-
     'NotoSansMono-Regular': require('../assets/fonts/NotoSansMono-Regular.ttf'),
     'NotoSansMono-Light': require('../assets/fonts/NotoSansMono-Light.ttf'),
     'NotoSansMono-Thin': require('../assets/fonts/NotoSansMono-Thin.ttf'),
@@ -70,9 +69,9 @@ export default function Layout() {
               // fontWeight:700,
             }
           }}
-        />
-      
-
+        >
+        <Stack.Screen name="home" options={{}} />
+        </Stack>
     </SafeAreaProvider>
 
 

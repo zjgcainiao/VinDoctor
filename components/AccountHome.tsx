@@ -17,7 +17,7 @@ import auth from '@react-native-firebase/auth';
 import { MaterialIcons,FontAwesome5, AntDesign } from "@expo/vector-icons"; // For the back button
 import main_styles from "../styles/MainTheme.styles";
 import { useRef } from "react";
-import { Link, useRouter,useNavigation } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 
 import {firebaseUserStore,
@@ -30,8 +30,8 @@ import { interpolate} from 'react-native-reanimated';
 const AccountHome: React.FC = () => {
   const [menuExpanded, setMenuExpanded] = useState(false);
   {/* useProtectedRoute(); */}
-  const navigation = useNavigation();
-  // const router = useRouter();
+
+  const router = useRouter();
   const menuHeight = useRef(new Animated.Value(0)).current; // Animation for height
   const animation = useRef(new Animated.ValueXY()).current;
   const pan = useRef(new Animated.ValueXY()).current;
@@ -73,7 +73,7 @@ const AccountHome: React.FC = () => {
     if (menuExpanded) {
       // Collapse
       Animated.timing(menuHeight, {
-        toValue: 0,
+        toValue: 10,
         duration: 300,
         useNativeDriver: false 
       }).start();
@@ -131,9 +131,8 @@ const AccountHome: React.FC = () => {
                 backgroundColor: 'sliver', // Basic silver background, replace with gradient if needed
                 },
               ]}
-            >
-              
-                <Pressable onPress={() => navigation.navigate('VehicleReport')}>
+            > 
+                <Pressable onPress={() => router.push("/VehicleReport")}>
                 
                   <Text style={styles.menuItem}><FontAwesome5 name="car" size={24} color="black" /></Text>
                 </Pressable>

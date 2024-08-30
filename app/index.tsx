@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import {
   View,
   Image,
@@ -7,16 +7,15 @@ import {
   TouchableOpacity,
   Pressable,
   SafeAreaView,
-    ScrollView,
+  ScrollView,
   Text,
 } from "react-native";
-import { Link,useRouter, } from 'expo-router';
-
 import {
+  Link, useRouter, useNavigation,
   useRootNavigationState,
   useSegments,
-  useNavigation,
-} from "expo-router";
+} from 'expo-router';
+
 import { Tabs } from 'expo-router/tabs';
 import { StatusBar } from "expo-status-bar";
 import main_styles from '../styles/MainTheme.styles';
@@ -24,7 +23,7 @@ import main_styles from '../styles/MainTheme.styles';
 import { Stack } from "expo-router/stack";
 
 import LogoTitle from "../components/LogoTitle";
-import  {LinearGradient } from "expo-linear-gradient";
+import { LinearGradient } from "expo-linear-gradient";
 import { firebaseUserStore } from "./auth/firebaseUserStore";
 import { useStoreState } from "pullstate";
 // import { onAuthStateChanged,getAuth } from "firebase/auth";
@@ -32,7 +31,7 @@ import auth from "@react-native-firebase/auth";
 // import { homepageRichTextContent } from '../constants';
 import { initializeSearchCounter } from '../components/saveSecureStore';
 
-const IndexPage: React.FC = () => {
+const IndexPage: FC = () => {
   const router = useRouter();
   //let store = useStoreState(firebaseUserStore);
   const segments = useSegments();
@@ -46,40 +45,39 @@ const IndexPage: React.FC = () => {
   initializeSearchCounter();
 
   return (
-    <LinearGradient
+    <SafeAreaView>
+      <LinearGradient
         colors={["#97989a", "#d1d3d5", "#555d61"]} //"#97989a" - color of the top, "#555d61" - color of the bottom
         start={{ x: 0.0, y: 0.0 }}
         end={{ x: 1.0, y: 1.0 }}
         style={main_styles.container}
-        >
-      <SafeAreaView >
-        {/* !isLoggedIn */ }
-        
-          <LogoTitle/>
-          <TouchableOpacity
-            style={main_styles.button}
-            onPress={() => navigation.navigate('RegisterScreen')}>
-            <Text style={main_styles.buttonText}>Register</Text>
-          </TouchableOpacity>
+      >
+        {/* !isLoggedIn */}
+
+        <LogoTitle />
+        <TouchableOpacity
+          style={main_styles.button}
+          onPress={() => navigation.navigate('RegisterScreen')}>
+          <Text style={main_styles.buttonText}> Register </Text>
+        </TouchableOpacity>
 
 
-          <TouchableOpacity
-            style={main_styles.button}
-            onPress={() => navigation.navigate('SignInScreen')}>
-            <Text style={main_styles.buttonText}>Sign In</Text>
-          </TouchableOpacity>
-  
-          <Link href="/VehicleReport" style={main_styles.mutedButton}>
-            <Text >Try It out</Text>
-          </Link>
+        <TouchableOpacity
+          style={main_styles.button}
+          onPress={() => navigation.navigate('SignInScreen')}>
+          <Text style={main_styles.buttonText}> Sign In </Text>
+        </TouchableOpacity>
+
+        <Link href="/VehicleReport" style={main_styles.mutedButton} >
+          <Text style={main_styles.mutedButtonText}>Try It out </Text>
+        </Link>
 
         {/* isLoggedIn */}
         {/* { false && (
-          <Text>Welcome back!</Text> // Or other content for logged-in users
-        )} */}
-      </SafeAreaView>
-     
-    </LinearGradient>     
+              <Text>Welcome back!</Text> // Or other content for logged-in users
+            )} */}
+      </LinearGradient>
+    </SafeAreaView>
   );
 };
 
